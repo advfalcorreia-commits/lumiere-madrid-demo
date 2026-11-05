@@ -3,7 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#0f0b0c">
+<meta name="theme-color" content="#101010" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f2ede5" media="(prefers-color-scheme: light)">
+<meta name="color-scheme" content="dark light">
 <meta name="description" content="Agencia de acompañantes de alto standing en Madrid. Seis perfiles verificados, agenda limitada cada semana y un concierge que responde en menos de dos horas.">
 <link rel="canonical" href="https://advfalcorreia-commits.github.io/lumiere-madrid-demo/">
 <meta property="og:type" content="website">
@@ -37,17 +39,17 @@
 :root {
   color-scheme: dark;
 
-  --bg:        #0f0b0c;
-  --bg-2:      #161011;
-  --bg-3:      #1e1617;
-  --fg:        #f3ebe1;
-  --fg-soft:   #cfc1b4;
-  --muted:     #b0a094;
-  --accent:    #c99174;
-  --accent-2:  #b8734f;
-  --line:      rgba(243, 235, 225, .16);
-  --line-soft: rgba(243, 235, 225, .085);
-  --glow:      rgba(201, 145, 116, .13);
+  --bg:        #101010;
+  --bg-2:      #211f1c;
+  --bg-3:      #2b2825;
+  --fg:        #f2ede5;
+  --fg-soft:   #d9d2c7;
+  --muted:     #8f8579;
+  --accent:    #c7a77a;
+  --accent-2:  #b08f63;
+  --line:      rgba(242, 237, 229, .16);
+  --line-soft: rgba(242, 237, 229, .085);
+  --glow:      rgba(199, 167, 122, .13);
 
   --font-display: "Bodoni Moda", "Didot", "Times New Roman", serif;
   --font-body: "Jost", "Helvetica Neue", Arial, sans-serif;
@@ -63,33 +65,33 @@
 @media (prefers-color-scheme: light) {
   :root:not([data-theme="dark"]) {
     color-scheme: light;
-    --bg:        #f5efe6;
-    --bg-2:      #fcf8f2;
-    --bg-3:      #ece2d5;
-    --fg:        #191214;
-    --fg-soft:   #3d3234;
-    --muted:     #5f4f4a;
-    --accent:    #8a4c34;
-    --accent-2:  #6f3b28;
+    --bg:        #f2ede5;
+    --bg-2:      #fbf8f2;
+    --bg-3:      #e7e0d4;
+    --fg:        #141210;
+    --fg-soft:   #35302a;
+    --muted:     #6a6259;
+    --accent:    #7a5c2e;
+    --accent-2:  #64491f;
     --line:      rgba(25, 18, 20, .17);
     --line-soft: rgba(25, 18, 20, .09);
-    --glow:      rgba(138, 76, 52, .1);
+    --glow:      rgba(122, 92, 46, .1);
   }
 }
 
 :root[data-theme="light"] {
   color-scheme: light;
-  --bg:        #f5efe6;
-  --bg-2:      #fcf8f2;
-  --bg-3:      #ece2d5;
-  --fg:        #191214;
-  --fg-soft:   #3d3234;
-  --muted:     #5f4f4a;
-  --accent:    #8a4c34;
-  --accent-2:  #6f3b28;
+  --bg:        #f2ede5;
+  --bg-2:      #fbf8f2;
+  --bg-3:      #e7e0d4;
+  --fg:        #141210;
+  --fg-soft:   #35302a;
+  --muted:     #6a6259;
+  --accent:    #7a5c2e;
+  --accent-2:  #64491f;
   --line:      rgba(25, 18, 20, .17);
   --line-soft: rgba(25, 18, 20, .09);
-  --glow:      rgba(138, 76, 52, .1);
+  --glow:      rgba(122, 92, 46, .1);
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -117,6 +119,29 @@ body::after {
 }
 
 img { max-width: 100%; }
+
+/* salto al contenido, para teclado */
+.skip {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 100;
+  padding: 12px 18px;
+  background: var(--fg);
+  color: var(--bg);
+  font-size: .78rem;
+  font-weight: 500;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transform: translateY(-250%);
+  transition: transform .2s ease;
+}
+.skip:focus { transform: translateY(0); outline: 2px solid var(--accent); outline-offset: 3px; }
+
+/* errores de formulario */
+.field-error { margin: 2px 0 0; font-size: .8rem; line-height: 1.4; color: #e08a7a; }
+.field [aria-invalid="true"] { border-bottom-color: #e08a7a; }
 a { color: inherit; }
 button { font: inherit; color: inherit; }
 
@@ -349,7 +374,7 @@ body::before {
 
 .hero-eyebrow { grid-column: 1 / 10; grid-row: 1; }
 .hero-title {
-  grid-column: 1 / 11;
+  grid-column: 1 / 10;
   grid-row: 2;
   margin: 0;
   font-size: clamp(2.5rem, 7vw, 6.1rem);
@@ -617,6 +642,18 @@ section { scroll-margin-top: 92px; }
 }
 .tier.is-featured { border-top: 2px solid var(--accent); margin-top: clamp(-32px, -2.4vw, -18px); }
 .tier .tier-index { font-size: .75rem; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+.tier-badge {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  padding: 5px 10px;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  font-size: .72rem;
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
 .tier h3 { margin: 0; font-family: var(--font-display); font-size: 1.55rem; line-height: 1.15; }
 .tier .price {
   font-family: var(--font-display);
@@ -743,7 +780,11 @@ form.enquiry { display: flex; flex-direction: column; gap: 18px; }
 }
 .field textarea { resize: vertical; min-height: 72px; }
 .field input::placeholder, .field textarea::placeholder { color: var(--muted); opacity: 1; }
-.field input:focus, .field textarea:focus, .field select:focus { outline: none; border-bottom-color: var(--accent); }
+.field input:focus, .field textarea:focus, .field select:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-bottom-color: var(--accent);
+}
 .field select option { background: var(--bg-2); color: var(--fg); }
 .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 22px; }
 .draft {
@@ -1110,6 +1151,9 @@ footer { border-top: 1px solid var(--line); background: var(--bg-2); }
 
 @media (max-width: 640px) {
   body { font-size: 16px; }
+  /* objetivos táctiles de al menos 44 px */
+  .chip, .lang button, .copy, .perfil-back, .header-phone { min-height: 44px; }
+  .lang button { min-width: 44px; }
   /* en el móvil el idioma y el CTA viven dentro del menú */
   .header-right .lang, .header-right > .btn { display: none; }
   .grid-profiles, .grid-profiles.is-filtered { grid-template-columns: 1fr; }
@@ -1121,6 +1165,8 @@ footer { border-top: 1px solid var(--line); background: var(--bg-2); }
   .brand-sub { font-size: .68rem; }
   .btn { padding: 11px 16px; font-size: .78rem; }
   .hero-title { font-size: clamp(2.1rem, 10.5vw, 3rem); }
+  .hero-actions { flex-direction: column; align-items: stretch; }
+  .hero-actions .btn { width: 100%; min-height: 48px; }
   .hero-strip { height: 84px; }
   .channel { align-items: flex-start; }
 }
@@ -1131,6 +1177,7 @@ footer { border-top: 1px solid var(--line); background: var(--bg-2); }
 </style>
 </head>
 <body>
+<a class="skip" href="#contenido">Saltar al contenido</a>
 
 <header class="site-header">
   <div class="wrap">
@@ -1176,7 +1223,7 @@ footer { border-top: 1px solid var(--line); background: var(--bg-2); }
   </div>
 </div>
 
-<main>
+<main id="contenido" tabindex="-1">
   <section class="hero" id="inicio">
     <div class="wrap">
       <div class="grid12">
@@ -1328,6 +1375,7 @@ footer { border-top: 1px solid var(--line); background: var(--bg-2); }
 
         <article class="tier is-featured">
           <span class="tier-index">02 / 03</span>
+          <span class="tier-badge" data-i18n="tier2.badge">Más solicitado</span>
           <h3 data-i18n="tier2.name">Velada completa</h3>
           <div class="price">620 €<small data-i18n="tier2.priceSmall">Desde · hasta 6 horas</small></div>
           <ul>
@@ -1622,6 +1670,7 @@ footer { border-top: 1px solid var(--line); background: var(--bg-2); }
       "tier1.li4": "Confirmación en menos de 2 h",
       "tier1.btn": "Solicitar <span aria-hidden=\"true\">→</span>",
       "tier2.name": "Velada completa",
+      "tier2.badge": "Más solicitado",
       "tier2.priceSmall": "Desde · hasta 6 horas",
       "tier2.li1": "Cena y continuación de la noche",
       "tier2.li2": "Gala, estreno o evento corporativo",
@@ -1672,6 +1721,8 @@ footer { border-top: 1px solid var(--line); background: var(--bg-2); }
       "form.type.opt4": "Viaje o estancia",
       "form.message": "Mensaje",
       "form.message.ph": "Perfil que le interesa, hora aproximada y cualquier detalle que ayude.",
+      "form.err.name": "Escribe un nombre o una inicial (al menos 2 letras).",
+      "form.err.date": "Esa fecha ya ha pasado. Elige hoy o un día posterior.",
       "form.submit": "Preparar mensaje",
       "form.draft.label": "Mensaje listo — cópielo y envíelo por WhatsApp o Telegram",
       "form.draft.copy": "Copiar mensaje",
@@ -1822,6 +1873,7 @@ footer { border-top: 1px solid var(--line); background: var(--bg-2); }
       "tier1.li4": "Confirmation within 2 hours",
       "tier1.btn": "Request <span aria-hidden=\"true\">→</span>",
       "tier2.name": "The full evening",
+      "tier2.badge": "Most requested",
       "tier2.priceSmall": "From · up to 6 hours",
       "tier2.li1": "Dinner and the rest of the night",
       "tier2.li2": "Gala, première or corporate event",
@@ -1872,6 +1924,8 @@ footer { border-top: 1px solid var(--line); background: var(--bg-2); }
       "form.type.opt4": "Travel or stay",
       "form.message": "Message",
       "form.message.ph": "The profile you have in mind, an approximate time and anything else that helps.",
+      "form.err.name": "Enter a name or initial (at least 2 letters).",
+      "form.err.date": "That date has already passed. Pick today or a later day.",
       "form.submit": "Prepare message",
       "form.draft.label": "Message ready — copy it and send it via WhatsApp or Telegram",
       "form.draft.copy": "Copy message",
@@ -2092,6 +2146,7 @@ footer { border-top: 1px solid var(--line); background: var(--bg-2); }
         return '<img class="photo-fg photo-slide' + (i ? "" : " is-active") + '"' +
                ' src="' + src + '"' +
                ' alt="' + (i ? "" : p.name) + '"' +
+               ' decoding="async"' + (i ? ' loading="lazy"' : ' fetchpriority="high"') +
                (i ? ' aria-hidden="true"' : "") + '>';
       }).join("");
     }
@@ -2216,7 +2271,7 @@ footer { border-top: 1px solid var(--line); background: var(--bg-2); }
     var cell = document.createElement("div");
     cell.className = "slot";
     if (!readOnly) { cell.title = t("gallery.cover"); }
-    cell.innerHTML = '<img src="' + src + '" alt="">';
+    cell.innerHTML = '<img src="' + src + '" alt="" loading="lazy" decoding="async">';
 
     cell.addEventListener("click", function () {
       if (readOnly) {
@@ -2520,7 +2575,8 @@ footer { border-top: 1px solid var(--line); background: var(--bg-2); }
   }
 
   function openSheet(p) {
-    lastFocus = document.activeElement;
+    /* solo se guarda el origen la primera vez, por si se abre dos veces */
+    if (overlay.hidden) { lastFocus = document.activeElement; }
     currentProfile = p;
 
     document.getElementById("sheetName").textContent = p.name + ", " + p.edad;
@@ -2547,6 +2603,8 @@ footer { border-top: 1px solid var(--line); background: var(--bg-2); }
     overlay.hidden = false;
     document.body.style.overflow = "hidden";
     overlay.scrollTop = 0;
+    var firstFocus = overlay.querySelector(".perfil-back");
+    if (firstFocus) { try { firstFocus.focus({ preventScroll: true }); } catch (err) { firstFocus.focus(); } }
     if (location.hash !== "#perfil/" + p.key) {
       try { history.pushState(null, "", "#perfil/" + p.key); } catch (err) { location.hash = "#perfil/" + p.key; }
     }
@@ -2554,10 +2612,12 @@ footer { border-top: 1px solid var(--line); background: var(--bg-2); }
 
   function closeSheet() {
     if (overlay.hidden) { return; }
+    /* el foco vuelve al origen antes de ocultar, o el navegador lo deja en body */
+    var back = lastFocus;
+    currentProfile = null;
+    if (back && back.focus) { try { back.focus({ preventScroll: true }); } catch (err) { back.focus(); } }
     overlay.hidden = true;
     document.body.style.overflow = "";
-    currentProfile = null;
-    if (lastFocus && lastFocus.focus) { lastFocus.focus(); }
     if (/^#perfil\//.test(location.hash)) {
       try { history.pushState(null, "", "#coleccion"); } catch (err) {}
     }
@@ -2583,8 +2643,19 @@ footer { border-top: 1px solid var(--line); background: var(--bg-2); }
     document.body.style.overflow = "";
     currentProfile = null;
   });
+  /* el diálogo retiene el tabulador mientras está abierto */
   document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape" && !overlay.hidden) { closeSheet(); }
+    if (overlay.hidden) { return; }
+    if (e.key === "Escape") { closeSheet(); return; }
+    if (e.key !== "Tab") { return; }
+    var items = overlay.querySelectorAll(
+      'a[href], button:not([disabled]), input:not([disabled]), select, textarea, [tabindex]:not([tabindex="-1"])'
+    );
+    items = Array.prototype.filter.call(items, function (el) { return el.offsetParent !== null; });
+    if (!items.length) { return; }
+    var first = items[0], last = items[items.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   });
   window.addEventListener("hashchange", syncFromHash);
   window.addEventListener("popstate", syncFromHash);
@@ -2738,8 +2809,53 @@ footer { border-top: 1px solid var(--line); background: var(--bg-2); }
     external(document.getElementById("openWa"), waLink(lastDraft));
   }
 
+  /* validación accesible: el error se anuncia y no se envía nada */
+  function fieldError(input, message) {
+    var id = "err-" + input.id;
+    var box = document.getElementById(id);
+    if (!box) {
+      box = document.createElement("p");
+      box.className = "field-error";
+      box.id = id;
+      box.setAttribute("role", "alert");
+      input.parentNode.appendChild(box);
+      input.setAttribute("aria-describedby", id);
+    }
+    box.textContent = message || "";
+    box.hidden = !message;
+    if (message) { input.setAttribute("aria-invalid", "true"); }
+    else { input.removeAttribute("aria-invalid"); }
+    return !!message;
+  }
+
+  function validateForm() {
+    var nombre = document.getElementById("f-nombre");
+    var fecha = document.getElementById("f-fecha");
+    var bad = false;
+    if (fieldError(nombre, nombre.value.trim().length < 2 ? t("form.err.name") : "")) { bad = true; }
+    var futura = "";
+    if (fecha.value) {
+      var hoy = new Date(); hoy.setHours(0, 0, 0, 0);
+      if (new Date(fecha.value + "T00:00:00") < hoy) { futura = t("form.err.date"); }
+    }
+    if (fieldError(fecha, futura)) { bad = true; }
+    if (bad) {
+      var first = form.querySelector('[aria-invalid="true"]');
+      if (first) { first.focus(); }
+    }
+    return !bad;
+  }
+
+  ["f-nombre", "f-fecha"].forEach(function (id) {
+    var input = document.getElementById(id);
+    input.addEventListener("input", function () {
+      if (input.getAttribute("aria-invalid") === "true") { fieldError(input, ""); }
+    });
+  });
+
   form.addEventListener("submit", function (e) {
     e.preventDefault();
+    if (!validateForm()) { return; }
     buildDraft();
   });
 
