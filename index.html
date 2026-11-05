@@ -1,0 +1,2759 @@
+<title>Lumière Madrid</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Jost:wght@400;500;600&display=swap">
+
+<style>
+/* ─────────────────────────────────────────────────────────────
+   LUMIÈRE MADRID — plan de diseño
+   Color   negro cálido de salón nocturno · marfil · cobre apagado
+   Tipo    Bodoni Moda (display) · Jost 400/500 (texto y etiquetas)
+   Layout  sistema de 12 columnas; hero tipográfico con panel de
+           agenda; rejilla asimétrica de perfiles; honorarios sin
+           caja; FAQ con riel fijo; formulario como línea de firma
+   ───────────────────────────────────────────────────────────── */
+
+:root {
+  color-scheme: dark;
+
+  --bg:        #0f0b0c;
+  --bg-2:      #161011;
+  --bg-3:      #1e1617;
+  --fg:        #f3ebe1;
+  --fg-soft:   #cfc1b4;
+  --muted:     #b0a094;
+  --accent:    #c99174;
+  --accent-2:  #b8734f;
+  --line:      rgba(243, 235, 225, .16);
+  --line-soft: rgba(243, 235, 225, .085);
+  --glow:      rgba(201, 145, 116, .13);
+
+  --font-display: "Bodoni Moda", "Didot", "Times New Roman", serif;
+  --font-body: "Jost", "Helvetica Neue", Arial, sans-serif;
+
+  --gutter: max(18px, env(safe-area-inset-left, 0px));
+  --gutter-r: max(18px, env(safe-area-inset-right, 0px));
+
+  --band-tight: clamp(44px, 5vw, 72px);
+  --band: clamp(64px, 8vw, 112px);
+  --band-wide: clamp(88px, 11vw, 152px);
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    color-scheme: light;
+    --bg:        #f5efe6;
+    --bg-2:      #fcf8f2;
+    --bg-3:      #ece2d5;
+    --fg:        #191214;
+    --fg-soft:   #3d3234;
+    --muted:     #5f4f4a;
+    --accent:    #8a4c34;
+    --accent-2:  #6f3b28;
+    --line:      rgba(25, 18, 20, .17);
+    --line-soft: rgba(25, 18, 20, .09);
+    --glow:      rgba(138, 76, 52, .1);
+  }
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg:        #f5efe6;
+  --bg-2:      #fcf8f2;
+  --bg-3:      #ece2d5;
+  --fg:        #191214;
+  --fg-soft:   #3d3234;
+  --muted:     #5f4f4a;
+  --accent:    #8a4c34;
+  --accent-2:  #6f3b28;
+  --line:      rgba(25, 18, 20, .17);
+  --line-soft: rgba(25, 18, 20, .09);
+  --glow:      rgba(138, 76, 52, .1);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 16.5px;
+  line-height: 1.62;
+  overflow-x: hidden;
+}
+
+/* grano: por debajo del contenido, nunca encima del texto */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: .022;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+img { max-width: 100%; }
+a { color: inherit; }
+button { font: inherit; color: inherit; }
+
+.wrap {
+  width: 100%;
+  max-width: 1256px;
+  margin-inline: auto;
+  padding-left: var(--gutter);
+  padding-right: var(--gutter-r);
+}
+
+.grid12 {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: clamp(14px, 1.7vw, 26px);
+}
+
+/* ── tipografía ─────────────────────────────────────────── */
+.display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -.012em;
+  text-wrap: balance;
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: .79rem;
+  font-weight: 500;
+  letter-spacing: .15em;
+  line-height: 1.35;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+h2.display { font-size: clamp(2.1rem, 4.6vw, 3.5rem); margin: 0; }
+h3 { font-weight: 400; }
+
+.lede {
+  margin: 0;
+  font-weight: 400;
+  font-size: 1.03rem;
+  line-height: 1.65;
+  color: var(--fg-soft);
+  max-width: 60ch;
+}
+
+/* ── barra de demostración ──────────────────────────────── */
+.strip {
+  border-bottom: 1px solid var(--line-soft);
+  font-size: .75rem;
+  letter-spacing: .05em;
+  color: var(--muted);
+}
+.strip .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  align-items: center;
+  padding-block: 7px;
+}
+.strip b { color: var(--fg-soft); font-weight: 500; letter-spacing: .1em; text-transform: uppercase; font-size: .72rem; }
+
+/* ── cabecera ───────────────────────────────────────────── */
+.site-header {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 20;
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  backdrop-filter: blur(14px) saturate(120%);
+  border-bottom: 1px solid var(--line-soft);
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0 0 auto;
+  height: env(safe-area-inset-top, 0px);
+  z-index: 21;
+  background: var(--bg);
+}
+.site-header .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22px;
+  padding-block: 14px;
+}
+
+.brand { display: flex; flex-direction: column; gap: 2px; text-decoration: none; }
+.brand-mark {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.6rem;
+  letter-spacing: .26em;
+  line-height: 1;
+  text-transform: uppercase;
+  text-indent: .26em;
+}
+.brand-sub {
+  font-size: .72rem;
+  font-weight: 500;
+  letter-spacing: .3em;
+  line-height: 1.3;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-indent: .3em;
+}
+
+.nav-links { display: flex; gap: 28px; align-items: center; }
+.nav-links a {
+  position: relative;
+  text-decoration: none;
+  font-size: .82rem;
+  font-weight: 500;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--fg-soft);
+  padding-block: 5px;
+  transition: color .25s ease;
+}
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 100%;
+  bottom: 0;
+  height: 1px;
+  background: var(--accent);
+  transition: right .35s cubic-bezier(.2,.7,.2,1);
+}
+.nav-links a:hover, .nav-links a:focus-visible { color: var(--fg); }
+.nav-links a:hover::after, .nav-links a:focus-visible::after { right: 0; }
+
+.header-right { display: flex; align-items: center; gap: 14px; }
+.header-phone {
+  font-size: .86rem;
+  letter-spacing: .02em;
+  color: var(--fg-soft);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.lang { display: flex; border: 1px solid var(--line); }
+.lang button {
+  background: none;
+  border: 0;
+  padding: 7px 10px;
+  font-size: .76rem;
+  font-weight: 500;
+  letter-spacing: .08em;
+  color: var(--muted);
+  cursor: pointer;
+  transition: color .2s, background .2s;
+}
+.lang button + button { border-left: 1px solid var(--line); }
+.lang button:hover { color: var(--fg); }
+.lang button[aria-pressed="true"] { background: var(--fg); color: var(--bg); }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--fg);
+  text-decoration: none;
+  cursor: pointer;
+  padding: 12px 22px;
+  font-size: .8rem;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  transition: background .3s ease, border-color .3s ease, color .3s ease;
+}
+.btn:hover { border-color: var(--accent); color: var(--accent); }
+.btn-solid {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--bg);
+}
+.btn-solid:hover { background: var(--accent-2); border-color: var(--accent-2); color: var(--bg); }
+
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  align-self: flex-start;
+  text-decoration: none;
+  font-size: .8rem;
+  font-weight: 500;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding-bottom: 6px;
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  transition: gap .25s ease, border-color .25s ease;
+}
+.link-arrow:hover, .link-arrow:focus-visible { gap: 16px; border-color: var(--accent); }
+
+.burger {
+  display: none;
+  background: none;
+  border: 1px solid var(--line);
+  padding: 9px 11px;
+  cursor: pointer;
+}
+.burger span { display: block; width: 18px; height: 1.5px; background: var(--fg); margin: 4px 0; }
+
+/* menú móvil */
+.mobile-panel {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  padding: calc(env(safe-area-inset-top, 0px) + 20px) var(--gutter-r) 28px var(--gutter);
+  gap: 4px;
+}
+.mobile-panel[hidden] { display: none; }
+.mobile-panel .close-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 26px; }
+.mobile-panel a {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  text-decoration: none;
+  padding-block: 12px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.mobile-panel .lang { align-self: flex-start; margin-top: 26px; }
+
+/* ── hero ───────────────────────────────────────────────── */
+.hero { position: relative; overflow: clip; }
+.hero::before {
+  content: "";
+  position: absolute;
+  top: -34%;
+  left: -12%;
+  width: 68vw;
+  height: 68vw;
+  background: radial-gradient(circle, var(--glow) 0%, transparent 62%);
+  pointer-events: none;
+}
+.hero > .wrap { position: relative; padding-block: clamp(52px, 6.5vw, 96px) 0; }
+.hero .grid12 { align-items: start; row-gap: clamp(22px, 2.6vw, 34px); }
+
+.hero-eyebrow { grid-column: 1 / 10; grid-row: 1; }
+.hero-title {
+  grid-column: 1 / 11;
+  grid-row: 2;
+  margin: 0;
+  font-size: clamp(2.5rem, 7vw, 6.1rem);
+  line-height: .99;
+  letter-spacing: -.028em;
+}
+.hero-title em { font-style: italic; color: var(--accent); }
+.hero-lede { grid-column: 1 / 7; grid-row: 3; }
+.hero-actions {
+  grid-column: 1 / 7;
+  grid-row: 4;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-top: 4px;
+}
+
+.hero-panel {
+  grid-column: 10 / 13;
+  grid-row: 1 / 5;
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  border-top: 1px solid var(--line);
+  padding-top: 16px;
+  min-width: 0;
+}
+.agenda { list-style: none; margin: 0; padding: 0; }
+.agenda li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: baseline;
+  padding-block: 11px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.agenda-day { font-family: var(--font-display); font-size: 1.08rem; }
+.agenda-state {
+  font-size: .75rem;
+  font-weight: 500;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.agenda li.is-scarce .agenda-state { color: var(--accent); }
+
+/* faixa de molduras */
+.hero-strip {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 2px;
+  height: clamp(108px, 14vw, 186px);
+  margin-top: clamp(40px, 6vw, 78px);
+  border-top: 1px solid var(--line);
+}
+
+/* moldura placeholder — generada, sin fotografías */
+.frame {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(128% 92% at 72% 6%, color-mix(in srgb, var(--accent) var(--m, 18%), transparent) 0%, transparent 64%),
+    linear-gradient(168deg, color-mix(in srgb, var(--accent) var(--m, 18%), var(--bg-2)) 0%, var(--bg) 82%);
+  isolation: isolate;
+}
+.frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(112deg, var(--line-soft) 0 1px, transparent 1px 10px);
+  opacity: .45;
+}
+.frame .mono {
+  font-family: var(--font-display);
+  font-size: clamp(2.6rem, 6vw, 4.6rem);
+  line-height: 1;
+  letter-spacing: .04em;
+  color: color-mix(in srgb, var(--accent) 62%, transparent);
+}
+.hero-strip .frame .mono { font-size: clamp(1.6rem, 3.4vw, 2.6rem); color: color-mix(in srgb, var(--accent) 40%, transparent); }
+.shade-1 { --m: 10%; }
+.shade-2 { --m: 14%; }
+.shade-3 { --m: 18%; }
+.shade-4 { --m: 22%; }
+.shade-5 { --m: 26%; }
+.shade-6 { --m: 30%; }
+
+/* ── respiro / declaración ──────────────────────────────── */
+.statement { background: var(--bg-2); padding-block: var(--band-wide); }
+.statement .grid12 { row-gap: 28px; align-items: end; }
+.statement-quote {
+  grid-column: 2 / 9;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.7rem, 3.4vw, 2.9rem);
+  line-height: 1.14;
+  letter-spacing: -.01em;
+  text-wrap: balance;
+}
+.statement-quote em { font-style: italic; color: var(--accent); }
+.statement-cities {
+  grid-column: 10 / 13;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: right;
+  font-size: .78rem;
+  font-weight: 500;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ── secciones ──────────────────────────────────────────── */
+section { scroll-margin-top: 92px; }
+.band { padding-block: var(--band); }
+.band.rule { border-top: 1px solid var(--line-soft); }
+.band.wide { padding-block: var(--band-wide); }
+
+.section-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 33ch);
+  gap: 20px 48px;
+  align-items: end;
+  margin-bottom: clamp(28px, 3.8vw, 52px);
+}
+.section-head .eyebrow { display: block; margin-bottom: 14px; }
+.section-head p { margin: 0; font-size: .95rem; line-height: 1.6; color: var(--fg-soft); }
+
+/* filtros */
+.filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: clamp(22px, 2.6vw, 34px); }
+.chip {
+  border: 1px solid var(--line);
+  background: transparent;
+  padding: 8px 15px;
+  font-size: .76rem;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--fg-soft);
+  cursor: pointer;
+  transition: color .25s, border-color .25s, background .25s;
+}
+.chip:hover { color: var(--fg); border-color: var(--accent); }
+.chip[aria-pressed="true"] { background: var(--fg); border-color: var(--fg); color: var(--bg); }
+
+/* rejilla asimétrica de perfiles */
+.grid-profiles {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: clamp(14px, 1.7vw, 26px);
+  row-gap: clamp(26px, 3.4vw, 48px);
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: none;
+  border: 0;
+  padding: 0;
+  text-align: left;
+  cursor: pointer;
+  min-width: 0;
+}
+.card-frame { position: relative; overflow: hidden; }
+.card .frame { aspect-ratio: 3 / 4; max-width: 100%; transition: transform .7s cubic-bezier(.2,.7,.2,1); }
+.card:hover .frame, .card:focus-visible .frame { transform: scale(1.028); }
+
+.card-tag {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 2;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  border: 1px solid var(--line-soft);
+  padding: 5px 9px;
+  font-size: .72rem;
+  font-weight: 500;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--fg-soft);
+}
+.card-top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.card-name { font-family: var(--font-display); font-size: 1.22rem; line-height: 1.15; }
+.card-price {
+  font-size: .84rem;
+  font-weight: 500;
+  color: var(--fg-soft);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px 12px;
+  font-size: .84rem;
+  color: var(--muted);
+}
+
+/* colocación editorial */
+.grid-profiles .card:nth-child(1) { grid-column: 1 / 6; }
+.grid-profiles .card:nth-child(1) .frame { aspect-ratio: 4 / 5; }
+.grid-profiles .card:nth-child(1) .card-name { font-size: 1.75rem; }
+.grid-profiles .card:nth-child(2) { grid-column: 7 / 10; margin-top: clamp(34px, 5vw, 82px); }
+.grid-profiles .card:nth-child(3) { grid-column: 10 / 13; margin-top: clamp(54px, 7vw, 118px); }
+.grid-profiles .card:nth-child(4) { grid-column: 2 / 5; }
+.grid-profiles .card:nth-child(5) { grid-column: 5 / 8; }
+.grid-profiles .card:nth-child(6) { grid-column: 9 / 12; margin-top: clamp(22px, 3vw, 46px); }
+.grid-profiles .card:nth-child(6) .frame { aspect-ratio: 5 / 4; }
+
+.grid-profiles.is-filtered { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.grid-profiles.is-filtered .card:nth-child(n) { grid-column: auto; margin-top: 0; }
+.grid-profiles.is-filtered .card:nth-child(n) .frame { aspect-ratio: 3 / 4; }
+.grid-profiles.is-filtered .card:nth-child(n) .card-name { font-size: 1.22rem; }
+.card[hidden] { display: none; }
+
+.note {
+  margin-top: clamp(26px, 3vw, 40px);
+  font-size: .84rem;
+  line-height: 1.6;
+  color: var(--muted);
+  max-width: 74ch;
+}
+
+/* pasos + ledger */
+.steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(18px, 3vw, 42px); }
+.step { display: grid; grid-template-columns: 2.7rem minmax(0, 1fr); column-gap: 4px; row-gap: 8px; }
+.step-num {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: .8rem;
+  letter-spacing: .12em;
+  color: var(--accent);
+  padding-top: .42em;
+}
+.step h3 { grid-column: 2; margin: 0; font-family: var(--font-display); font-size: 1.4rem; line-height: 1.2; }
+.step p { grid-column: 2; margin: 0; font-size: .93rem; line-height: 1.6; color: var(--fg-soft); }
+
+.ledger { display: flex; flex-direction: column; margin-top: clamp(40px, 5vw, 72px); border-top: 1px solid var(--line); }
+.ledger-row {
+  display: grid;
+  grid-template-columns: minmax(0, 20ch) minmax(0, 1fr);
+  gap: 6px 44px;
+  align-items: baseline;
+  padding-block: 19px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.ledger-row h3 { margin: 0; font-family: var(--font-display); font-size: 1.18rem; line-height: 1.25; }
+.ledger-row p { margin: 0; font-size: .93rem; line-height: 1.6; color: var(--fg-soft); }
+
+/* honorarios */
+.fees { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: clamp(16px, 2vw, 30px); row-gap: 34px; align-items: start; }
+.tier {
+  grid-column: span 4;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+  min-width: 0;
+}
+.tier.is-featured { border-top: 2px solid var(--accent); margin-top: clamp(-32px, -2.4vw, -18px); }
+.tier .tier-index { font-size: .75rem; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+.tier h3 { margin: 0; font-family: var(--font-display); font-size: 1.55rem; line-height: 1.15; }
+.tier .price {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 4.2vw, 3.8rem);
+  line-height: 1;
+  letter-spacing: -.03em;
+  font-variant-numeric: tabular-nums;
+}
+.tier .price small {
+  display: block;
+  margin-top: 10px;
+  font-family: var(--font-body);
+  font-size: .78rem;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.tier ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.tier li {
+  font-size: .93rem;
+  line-height: 1.5;
+  color: var(--fg-soft);
+  padding-block: 10px;
+  border-top: 1px solid var(--line-soft);
+}
+
+/* faq */
+.faq { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: clamp(16px, 2vw, 30px); row-gap: 34px; }
+.faq-head { grid-column: 1 / 5; align-self: start; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 92px); }
+.faq-head h2 { font-size: clamp(1.9rem, 3.2vw, 2.5rem); margin: 14px 0 0; }
+.faq-head p { margin: 16px 0 0; font-size: .95rem; color: var(--fg-soft); max-width: 34ch; }
+.faq-list { grid-column: 6 / 13; }
+details { border-bottom: 1px solid var(--line-soft); }
+details:first-child { border-top: 1px solid var(--line-soft); }
+summary {
+  list-style: none;
+  cursor: pointer;
+  display: grid;
+  grid-template-columns: 2.2rem minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: baseline;
+  padding-block: 17px;
+  font-size: 1rem;
+  line-height: 1.45;
+  color: var(--fg);
+}
+summary::-webkit-details-marker { display: none; }
+summary .qn { font-size: .78rem; font-weight: 500; letter-spacing: .1em; color: var(--muted); font-variant-numeric: tabular-nums; }
+summary::after {
+  content: "+";
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  line-height: 1;
+  color: var(--accent);
+  transition: transform .3s ease;
+}
+details[open] summary::after { transform: rotate(45deg); }
+details p { margin: 0 0 18px 2.2rem; font-size: .94rem; line-height: 1.65; color: var(--fg-soft); max-width: 62ch; }
+
+/* contacto */
+.contact { display: grid; grid-template-columns: 5fr 7fr; gap: clamp(28px, 4vw, 62px); align-items: start; }
+.channels { display: flex; flex-direction: column; margin-top: 26px; border-top: 1px solid var(--line); }
+.channel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding-block: 15px;
+  border-bottom: 1px solid var(--line-soft);
+  flex-wrap: wrap;
+}
+.channel .label {
+  display: block;
+  font-size: .74rem;
+  font-weight: 500;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.channel .value { font-size: .98rem; color: var(--fg); user-select: all; }
+a.value {
+  text-decoration: none;
+  border-bottom: 1px solid var(--line);
+  transition: color .25s, border-color .25s;
+}
+a.value:hover, a.value:focus-visible { color: var(--accent); border-bottom-color: var(--accent); }
+.contact-cta { margin-top: 24px; }
+.header-phone { text-decoration: none; transition: color .25s; }
+.header-phone:hover, .header-phone:focus-visible { color: var(--accent); }
+.copy {
+  background: none;
+  border: 1px solid var(--line);
+  padding: 7px 12px;
+  font-size: .74rem;
+  font-weight: 500;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--fg-soft);
+  cursor: pointer;
+  transition: color .25s, border-color .25s;
+}
+.copy:hover { color: var(--accent); border-color: var(--accent); }
+
+form.enquiry { display: flex; flex-direction: column; gap: 18px; }
+.field { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+.field label {
+  font-size: .74rem;
+  font-weight: 500;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.field input, .field textarea, .field select {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  color: var(--fg);
+  padding: 9px 0;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  border-radius: 0;
+  width: 100%;
+}
+.field textarea { resize: vertical; min-height: 72px; }
+.field input::placeholder, .field textarea::placeholder { color: var(--muted); opacity: 1; }
+.field input:focus, .field textarea:focus, .field select:focus { outline: none; border-bottom-color: var(--accent); }
+.field select option { background: var(--bg-2); color: var(--fg); }
+.row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 22px; }
+.draft {
+  display: none;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  border: 1px dashed color-mix(in srgb, var(--accent) 45%, transparent);
+  font-size: .88rem;
+}
+.draft.on { display: flex; }
+.draft pre {
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-family: var(--font-body);
+  font-size: .9rem;
+  line-height: 1.6;
+  color: var(--fg);
+}
+.fine { font-size: .82rem; line-height: 1.55; color: var(--muted); margin: 0; }
+
+/* pie */
+footer { border-top: 1px solid var(--line); background: var(--bg-2); }
+.foot-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 32px;
+  padding-block: clamp(38px, 4.6vw, 62px);
+}
+.foot-grid h4 {
+  margin: 0 0 12px;
+  font-size: .74rem;
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.foot-grid a { display: block; text-decoration: none; font-size: .92rem; color: var(--fg-soft); padding-block: 4px; }
+.foot-grid a:hover { color: var(--accent); }
+.foot-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding-block: 18px;
+  border-top: 1px solid var(--line-soft);
+  font-size: .8rem;
+  color: var(--muted);
+}
+.badge18 {
+  border: 1px solid var(--line);
+  padding: 4px 10px;
+  font-size: .76rem;
+  font-weight: 500;
+  letter-spacing: .1em;
+  color: var(--fg-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+/* página de perfil: una URL por modelo, todas sus fotos a la vista */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: var(--bg);
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.overlay[hidden] { display: none; }
+.perfil { min-height: 100%; background: var(--bg-2); }
+.perfil-head {
+  position: sticky;
+  top: 0;
+  z-index: 4;
+  background: color-mix(in srgb, var(--bg-2) 92%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line-soft);
+}
+.perfil-head-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 13px var(--gutter-r) 13px var(--gutter);
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+}
+.perfil-back {
+  font-size: .7rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--fg-soft);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.perfil-back:hover, .perfil-back:focus-visible { color: var(--accent); }
+.perfil-brand {
+  margin-inline: auto;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  letter-spacing: .02em;
+}
+.perfil-tag {
+  font-size: .7rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.perfil-grid {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: clamp(20px, 3.4vw, 46px) var(--gutter-r) clamp(48px, 7vw, 90px) var(--gutter);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(22px, 4vw, 60px);
+  align-items: start;
+}
+.perfil-info {
+  position: sticky;
+  top: 92px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+.perfil-info h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1;
+}
+.perfil-photos { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.perfil-photo {
+  margin: 0;
+  border: 1px solid var(--line-soft);
+  background: var(--bg);
+  overflow: hidden;
+}
+.perfil-photo img { display: block; width: 100%; height: auto; }
+.perfil-empty {
+  aspect-ratio: 3 / 4;
+  border: 1px solid var(--line);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-size: 3rem;
+  color: color-mix(in srgb, var(--accent) 55%, transparent);
+  background:
+    repeating-linear-gradient(45deg, transparent 0 9px, color-mix(in srgb, var(--line) 55%, transparent) 9px 10px),
+    var(--bg);
+}
+.sheet-facts { margin: 2px 0; }
+.sheet-facts div { display: flex; justify-content: space-between; gap: 16px; padding-block: 8px; border-bottom: 1px solid var(--line-soft); font-size: .88rem; }
+.sheet-facts dt { color: var(--muted); }
+.sheet-facts dd { margin: 0; text-align: right; color: var(--fg-soft); }
+
+/* galería de fotos del perfil */
+.frame img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* la fotografía se ve entera, sin recortes ni deformación, sea cual sea
+   su proporción: se centra en la moldura y el fondo del marco hace de
+   passe-partout */
+.frame img.photo-bg { display: none; }
+.frame img.photo-fg {
+  z-index: 2;
+  object-fit: contain;
+}
+/* sólo los cards reciben este tratamiento; la ficha conserva su marco */
+.card .frame:has(img.photo-fg)::before { opacity: 0; }
+.card .frame:has(img.photo-fg) { background: var(--bg-2); }
+
+/* pase de diapositivas de las tarjetas: todas las fotos del perfil se
+   apilan en el mismo marco y se relevan solas, una detrás de otra */
+.frame img.photo-slide { opacity: 0; transition: opacity .9s ease; }
+.frame img.photo-slide.is-active { opacity: 1; }
+.card-dots {
+  position: absolute;
+  z-index: 3;
+  left: 0;
+  right: 0;
+  bottom: 11px;
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  pointer-events: none;
+}
+.card-dots i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .42);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, .16);
+  transition: background .35s, transform .35s;
+}
+.card-dots i.is-active { background: #fff; transform: scale(1.3); }
+
+/* flechas: pasan las fotos de la tarjeta sin abrir el perfil */
+.card-nav {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 6px;
+  pointer-events: none;
+}
+.card-arrow {
+  pointer-events: auto;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(15, 11, 12, .55);
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 1.15rem;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity .25s, background .25s, transform .25s;
+}
+.card:hover .card-arrow,
+.card:focus-within .card-arrow { opacity: 1; }
+.card-arrow:hover { background: rgba(15, 11, 12, .84); transform: scale(1.07); }
+@media (hover: none) { .card-arrow { opacity: .92; } }
+@media (prefers-reduced-motion: reduce) { .card-arrow { transition: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .frame img.photo-slide { transition: none; }
+}
+.gallery-block { display: flex; flex-direction: column; gap: 10px; margin-top: 2px; }
+.gallery-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.gallery-count { font-size: .78rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px;
+  border: 1px dashed transparent;
+  padding: 2px;
+  transition: border-color .2s;
+}
+.gallery.is-drop { border-color: var(--accent); }
+.gallery > .fine { grid-column: 1 / -1; margin: 2px 0 0; }
+.slot {
+  position: relative;
+  display: block;
+  aspect-ratio: 1;
+  padding: 0;
+  border: 1px solid var(--line-soft);
+  background: var(--bg);
+  overflow: hidden;
+  cursor: pointer;
+  color: var(--muted);
+  transition: border-color .2s, color .2s;
+}
+.slot:hover, .slot:focus-visible { border-color: var(--accent); color: var(--accent); }
+.slot img { width: 100%; height: 100%; object-fit: contain; display: block; background: var(--bg-2); }
+.slot-empty {
+  font-size: 1.15rem;
+  line-height: 1;
+  font-family: var(--font-body);
+  display: grid;
+  place-items: center;
+}
+.slot-x {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 20px;
+  height: 20px;
+  border: 0;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  background: color-mix(in srgb, var(--bg) 78%, transparent);
+  color: var(--fg);
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.slot-x:hover { color: var(--accent); }
+.gallery-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+.gallery-hint { font-size: .78rem; color: var(--muted); }
+.btn:disabled { opacity: .4; cursor: not-allowed; }
+.btn:disabled:hover { border-color: var(--line); color: var(--fg); }
+
+.toastbar {
+  position: fixed;
+  left: 50%;
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 22px);
+  transform: translate(-50%, 16px);
+  background: var(--fg);
+  color: var(--bg);
+  padding: 11px 20px;
+  font-size: .82rem;
+  letter-spacing: .04em;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s, transform .3s;
+  z-index: 80;
+  max-width: calc(100vw - 36px);
+}
+.toastbar.on { opacity: 1; transform: translate(-50%, 0); }
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .rise { animation: rise .9s cubic-bezier(.2,.7,.2,1) both; }
+  .rise-2 { animation-delay: .08s; }
+  .rise-3 { animation-delay: .16s; }
+  .rise-4 { animation-delay: .24s; }
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: none; }
+  }
+}
+
+/* ── responsive ─────────────────────────────────────────── */
+@media (max-width: 1080px) {
+  .nav-links { display: none; }
+  .burger { display: block; }
+  .header-phone { display: none; }
+  .hero-eyebrow, .hero-title, .hero-lede, .hero-actions, .hero-panel { grid-column: 1 / -1; }
+  .hero-eyebrow { grid-row: 1; }
+  .hero-title { grid-row: 2; }
+  .hero-lede { grid-row: 3; }
+  .hero-actions { grid-row: 4; }
+  .hero-panel { grid-row: 5; margin-top: 10px; }
+  .hero-title { font-size: clamp(2.4rem, 9vw, 4.4rem); }
+  .hero-lede { max-width: 62ch; }
+  .hero-strip { grid-template-columns: repeat(3, 1fr); height: clamp(96px, 22vw, 150px); }
+  .statement-quote { grid-column: 1 / -1; }
+  .statement-cities { grid-column: 1 / -1; text-align: left; flex-direction: row; flex-wrap: wrap; gap: 6px 18px; }
+  .faq-head { grid-column: 1 / -1; position: static; }
+  .faq-list { grid-column: 1 / -1; }
+  .contact { grid-template-columns: 1fr; }
+  .section-head { grid-template-columns: 1fr; }
+  .grid-profiles, .grid-profiles.is-filtered { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .grid-profiles .card:nth-child(n) { grid-column: auto; margin-top: 0; }
+  .grid-profiles .card:nth-child(n) .frame { aspect-ratio: 3 / 4; }
+  .grid-profiles .card:nth-child(1) .frame { aspect-ratio: 4 / 5; }
+  .grid-profiles .card:nth-child(n) .card-name { font-size: 1.22rem; }
+  .fees { grid-template-columns: 1fr; }
+  .tier { grid-column: 1 / -1; }
+  .tier.is-featured { margin-top: 0; }
+  .steps { grid-template-columns: 1fr; gap: 26px; }
+  .foot-grid { grid-template-columns: 1fr 1fr; }
+  .perfil-grid { grid-template-columns: 1fr; }
+  .perfil-info { position: static; }
+  .perfil-tag { display: none; }
+  .perfil-photos { gap: 10px; }
+}
+
+@media (max-width: 640px) {
+  body { font-size: 16px; }
+  .grid-profiles, .grid-profiles.is-filtered { grid-template-columns: 1fr; }
+  .grid-profiles .card:nth-child(1) .frame { aspect-ratio: 4 / 5; }
+  .row-2 { grid-template-columns: 1fr; }
+  .foot-grid { grid-template-columns: 1fr; }
+  .ledger-row { grid-template-columns: 1fr; }
+  .brand-mark { font-size: 1.3rem; }
+  .brand-sub { font-size: .68rem; }
+  .btn { padding: 11px 16px; font-size: .78rem; }
+  .hero-title { font-size: clamp(2.1rem, 10.5vw, 3rem); }
+  .hero-strip { height: 84px; }
+  .channel { align-items: flex-start; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
+</style>
+
+<div class="strip">
+  <div class="wrap">
+    <b data-i18n="demo.badge">Plantilla de demostración</b>
+    <span data-i18n="demo.note">Nombres, retratos y tarifas son ficticios · contenido sustituible antes de publicar</span>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="#inicio" data-i18n-aria="brand.aria" aria-label="Lumière Madrid, inicio">
+      <span class="brand-mark">Lumière</span>
+      <span class="brand-sub" data-i18n="brand.sub">Madrid</span>
+    </a>
+
+    <nav class="nav-links" data-i18n-aria="nav.aria" aria-label="Navegación principal">
+      <a href="#coleccion" data-i18n="nav.collection">La colección</a>
+      <a href="#servicio" data-i18n="nav.service">Servicio</a>
+      <a href="#honorarios" data-i18n="nav.fees">Honorarios</a>
+      <a href="#preguntas" data-i18n="nav.faq">Preguntas</a>
+    </nav>
+
+    <div class="header-right">
+      <a class="header-phone" id="headerPhone" href="#contacto" data-i18n-aria="header.phoneAria" aria-label="Escribir por WhatsApp">+34 642 47 30 82</a>
+      <div class="lang" role="group" data-i18n-aria="lang.aria" aria-label="Idioma">
+        <button type="button" data-lang="es" aria-pressed="true">ES</button>
+        <button type="button" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+      <a class="btn btn-solid" href="#contacto" data-i18n="header.cta">Contacto</a>
+      <button class="burger" id="burger" data-i18n-aria="header.burgerAria" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-panel" id="mobilePanel" hidden>
+  <div class="close-row">
+    <span class="brand"><span class="brand-mark">Lumière</span><span class="brand-sub" data-i18n="brand.sub">Madrid</span></span>
+    <button class="btn" id="closeMenu" data-i18n="mobile.close">Cerrar</button>
+  </div>
+  <a href="#coleccion" data-i18n="nav.collection">La colección</a>
+  <a href="#servicio" data-i18n="nav.service">Servicio</a>
+  <a href="#honorarios" data-i18n="nav.fees">Honorarios</a>
+  <a href="#preguntas" data-i18n="nav.faq">Preguntas</a>
+  <a href="#contacto" data-i18n="nav.contact">Contacto</a>
+  <div class="lang" role="group" data-i18n-aria="lang.aria" aria-label="Idioma">
+    <button type="button" data-lang="es" aria-pressed="true">ES</button>
+    <button type="button" data-lang="en" aria-pressed="false">EN</button>
+  </div>
+</div>
+
+<main>
+  <section class="hero" id="inicio">
+    <div class="wrap">
+      <div class="grid12">
+        <p class="eyebrow hero-eyebrow rise" data-i18n="hero.eyebrow">Agencia de acompañantes de alto standing · Madrid</p>
+
+        <h1 class="display hero-title rise rise-2" data-i18n="hero.h1">Compañía impecable para las <em>noches</em> que cuentan.</h1>
+
+        <p class="lede hero-lede rise rise-3" data-i18n="hero.lede">Una representación pequeña y deliberadamente limitada: seis acompañantes, una agenda acotada cada semana y un concierge que conoce a las seis por su nombre. Cenas, galas, viajes y estancias privadas.</p>
+
+        <div class="hero-actions rise rise-4">
+          <a class="btn btn-solid" href="#coleccion" data-i18n="hero.cta1">Ver la colección</a>
+          <a class="btn" id="heroWa" href="#contacto" data-i18n="hero.cta2">Hablar con el concierge</a>
+        </div>
+
+        <aside class="hero-panel rise rise-3">
+          <p class="eyebrow" data-i18n="panel.eyebrow">Próximas fechas</p>
+          <ul class="agenda">
+            <li><span class="agenda-day" data-i18n="panel.d1">Jueves</span><span class="agenda-state" data-i18n="panel.s1">2 libres</span></li>
+            <li class="is-scarce"><span class="agenda-day" data-i18n="panel.d2">Viernes</span><span class="agenda-state" data-i18n="panel.s2">1 libre</span></li>
+            <li><span class="agenda-day" data-i18n="panel.d3">Sábado</span><span class="agenda-state" data-i18n="panel.s3">Completo</span></li>
+            <li><span class="agenda-day" data-i18n="panel.d4">Domingo</span><span class="agenda-state" data-i18n="panel.s4">1 libre</span></li>
+          </ul>
+          <a class="link-arrow" href="#contacto" data-i18n="panel.cta">Reservar <span aria-hidden="true">→</span></a>
+        </aside>
+      </div>
+    </div>
+
+    <div class="hero-strip" aria-hidden="true">
+      <div class="frame shade-1"><span class="mono">V</span></div>
+      <div class="frame shade-2"><span class="mono">S</span></div>
+      <div class="frame shade-3"><span class="mono">C</span></div>
+      <div class="frame shade-4"><span class="mono">N</span></div>
+      <div class="frame shade-5"><span class="mono">I</span></div>
+      <div class="frame shade-6"><span class="mono">A</span></div>
+    </div>
+  </section>
+
+  <section class="statement">
+    <div class="wrap">
+      <div class="grid12">
+        <p class="statement-quote" data-i18n="statement.quote">Tres ciudades, seis nombres y una sola regla: <em>ninguna cita se improvisa</em>.</p>
+        <div class="statement-cities">
+          <span data-i18n="city.madrid">Madrid</span>
+          <span data-i18n="city.marbella">Marbella</span>
+          <span data-i18n="city.barcelona">Barcelona</span>
+          <span data-i18n="city.ibiza">Ibiza</span>
+          <span data-i18n="city.lisbon">Lisboa</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band rule" id="coleccion">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow" data-i18n="coll.eyebrow">01 — La colección</span>
+          <h2 class="display" data-i18n="coll.h2">Seis retratos, ninguna improvisación.</h2>
+        </div>
+        <p data-i18n="coll.lede">Cada perfil se incorpora por recomendación y pasa por una entrevista presencial antes de publicarse.</p>
+      </div>
+
+      <div class="filters" role="group" data-i18n-aria="coll.filterAria" aria-label="Filtrar perfiles por idioma">
+        <button class="chip" data-filter="all" aria-pressed="true" data-i18n="coll.filter.all">Todas</button>
+        <button class="chip" data-filter="es" aria-pressed="false" data-i18n="lang.es">Español</button>
+        <button class="chip" data-filter="en" aria-pressed="false" data-i18n="lang.en">Inglés</button>
+        <button class="chip" data-filter="fr" aria-pressed="false" data-i18n="lang.fr">Francés</button>
+        <button class="chip" data-filter="otros" aria-pressed="false" data-i18n="coll.filter.other">Otros idiomas</button>
+      </div>
+
+      <div class="grid-profiles" id="profileGrid"></div>
+
+      <p class="note" data-i18n="coll.note">Perfiles de demostración. Los retratos de esta plantilla son imágenes generadas, no fotografías: en la agencia real se sustituyen por imágenes propias de cada acompañante, publicadas con su consentimiento por escrito.</p>
+    </div>
+  </section>
+
+  <section class="band rule" id="servicio">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow" data-i18n="steps.eyebrow">02 — Cómo funciona</span>
+          <h2 class="display" data-i18n="steps.h2">Tres pasos y una sola persona al teléfono.</h2>
+        </div>
+        <p data-i18n="steps.lede">Sin formularios largos ni intermediarios: escríbanos, reciba una propuesta concreta y confirme.</p>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <span class="step-num">01</span>
+          <h3 data-i18n="step1.h3">Escriba al concierge</h3>
+          <p data-i18n="step1.p">WhatsApp o correo, a cualquier hora. Indique fecha, ciudad, duración y el tipo de encuentro: cena, gala, viaje o estancia.</p>
+        </div>
+        <div class="step">
+          <span class="step-num">02</span>
+          <h3 data-i18n="step2.h3">Reciba una propuesta</h3>
+          <p data-i18n="step2.p">En menos de dos horas le enviamos dos o tres perfiles compatibles con su agenda, con disponibilidad y honorarios cerrados.</p>
+        </div>
+        <div class="step">
+          <span class="step-num">03</span>
+          <h3 data-i18n="step3.h3">Confirme la cita</h3>
+          <p data-i18n="step3.p">Confirmación por escrito con nombre, hora y lugar. La reserva queda bloqueada desde ese momento hasta el final del encuentro.</p>
+        </div>
+      </div>
+
+      <div class="ledger">
+        <div class="ledger-row">
+          <h3 data-i18n="ass1.h">Discreción</h3>
+          <p data-i18n="ass1.p">Sin listas de correo, sin cruces entre perfiles y sin datos de clientes en el móvil de nadie más.</p>
+        </div>
+        <div class="ledger-row">
+          <h3 data-i18n="ass2.h">Verificación</h3>
+          <p data-i18n="ass2.p">Cada acompañante es mayor de edad, está verificada en persona y tiene contrato de representación firmado.</p>
+        </div>
+        <div class="ledger-row">
+          <h3 data-i18n="ass3.h">Puntualidad</h3>
+          <p data-i18n="ass3.p">Confirmación diez minutos antes por el mismo canal. Si algo cambia, lo sabe usted primero.</p>
+        </div>
+        <div class="ledger-row">
+          <h3 data-i18n="ass4.h">Agenda limitada</h3>
+          <p data-i18n="ass4.p">Tres encuentros por semana y por acompañante. Preferimos rechazar antes que improvisar.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band wide rule" id="honorarios">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow" data-i18n="fees.eyebrow">03 — Honorarios</span>
+          <h2 class="display" data-i18n="fees.h2">Tarifas claras, sin sorpresas de última hora.</h2>
+        </div>
+        <p data-i18n="fees.lede">Importes de referencia por encuentro. El concierge confirma el total por escrito antes de cualquier reserva.</p>
+      </div>
+
+      <div class="fees">
+        <article class="tier">
+          <span class="tier-index">01 / 03</span>
+          <h3 data-i18n="tier1.name">Cita social</h3>
+          <div class="price">350 €<small data-i18n="tier1.priceSmall">Desde · hasta 3 horas</small></div>
+          <ul>
+            <li data-i18n="tier1.li1">Cena, cóctel o evento privado</li>
+            <li data-i18n="tier1.li2">Desplazamiento dentro de Madrid incluido</li>
+            <li data-i18n="tier1.li3">Vestuario acorde al lugar</li>
+            <li data-i18n="tier1.li4">Confirmación en menos de 2 h</li>
+          </ul>
+          <a class="link-arrow" href="#contacto" data-i18n="tier1.btn">Solicitar <span aria-hidden="true">→</span></a>
+        </article>
+
+        <article class="tier is-featured">
+          <span class="tier-index">02 / 03</span>
+          <h3 data-i18n="tier2.name">Velada completa</h3>
+          <div class="price">620 €<small data-i18n="tier2.priceSmall">Desde · hasta 6 horas</small></div>
+          <ul>
+            <li data-i18n="tier2.li1">Cena y continuación de la noche</li>
+            <li data-i18n="tier2.li2">Gala, estreno o evento corporativo</li>
+            <li data-i18n="tier2.li3">Acompañamiento en el idioma que elija</li>
+            <li data-i18n="tier2.li4">El mismo perfil, reservable varios días seguidos</li>
+          </ul>
+          <a class="link-arrow" href="#contacto" data-i18n="tier2.btn">Solicitar <span aria-hidden="true">→</span></a>
+        </article>
+
+        <article class="tier">
+          <span class="tier-index">03 / 03</span>
+          <h3 data-i18n="tier3.name">Viaje o estancia</h3>
+          <div class="price" data-i18n="tier3.price">A medida</div>
+          <ul>
+            <li data-i18n="tier3.li1">Destino nacional o internacional</li>
+            <li data-i18n="tier3.li2">Agenda y traslados coordinados</li>
+            <li data-i18n="tier3.li3">Documentación y equipaje revisados con antelación</li>
+            <li data-i18n="tier3.li4">Presupuesto cerrado por escrito</li>
+          </ul>
+          <a class="link-arrow" href="#contacto" data-i18n="tier3.btn">Consultar <span aria-hidden="true">→</span></a>
+        </article>
+      </div>
+
+      <p class="note" data-i18n="fees.note">Los honorarios cubren el tiempo de acompañamiento. No incluyen billetes, alojamiento, consumiciones ni gastos del evento, que se acuerdan aparte y siempre por escrito.</p>
+    </div>
+  </section>
+
+  <section class="band rule" id="preguntas">
+    <div class="wrap">
+      <div class="faq">
+        <div class="faq-head">
+          <span class="eyebrow" data-i18n="faq.eyebrow">04 — Preguntas</span>
+          <h2 class="display" data-i18n="faq.h2">Lo que se pregunta antes de escribir.</h2>
+          <p data-i18n="faq.lede">Si falta algo, el concierge responde sin rodeos por WhatsApp.</p>
+        </div>
+
+        <div class="faq-list">
+          <details open>
+            <summary><span class="qn">01</span><span data-i18n="faq.q1">¿Cómo se reserva una cita?</span></summary>
+            <p data-i18n="faq.a1">Con un mensaje al concierge indicando fecha, ciudad, duración y tipo de encuentro. Recibirá dos o tres propuestas y confirmará la que prefiera. La reserva existe cuando hay confirmación por escrito.</p>
+          </details>
+          <details>
+            <summary><span class="qn">02</span><span data-i18n="faq.q2">¿Qué incluyen los honorarios?</span></summary>
+            <p data-i18n="faq.a2">El tiempo de acompañamiento y el desplazamiento dentro de la ciudad acordada. Billetes, alojamiento, consumiciones y gastos del evento se acuerdan aparte y se detallan antes de confirmar.</p>
+          </details>
+          <details>
+            <summary><span class="qn">03</span><span data-i18n="faq.q3">¿Se pide anticipo?</span></summary>
+            <p data-i18n="faq.a3">Para citas en Madrid, no. Para viajes y desplazamientos fuera de la ciudad se solicita una señal que cubre el transporte, siempre con comprobante y condiciones por escrito.</p>
+          </details>
+          <details>
+            <summary><span class="qn">04</span><span data-i18n="faq.q4">¿Cómo se verifica la edad?</span></summary>
+            <p data-i18n="faq.a4">Todas las acompañantes acreditan ser mayores de 18 años con documento en la entrevista presencial previa a su publicación. El servicio se dirige exclusivamente a personas adultas.</p>
+          </details>
+          <details>
+            <summary><span class="qn">05</span><span data-i18n="faq.q5">¿Las fotografías son reales?</span></summary>
+            <p data-i18n="faq.a5">En esta plantilla, no: los retratos son imágenes de demostración. En una agencia real se publican fotografías propias de cada acompañante, cedidas con consentimiento escrito y actualizadas en cada renovación.</p>
+          </details>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band rule" id="contacto">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow" data-i18n="contact.eyebrow">05 — Contacto</span>
+          <h2 class="display" data-i18n="contact.h2">El concierge responde en menos de dos horas.</h2>
+        </div>
+        <p data-i18n="contact.sub">Atención las 24 horas. Conversación privada y sin registro público.</p>
+      </div>
+
+      <div class="contact">
+        <div>
+          <p class="lede" data-i18n="contact.lede">Escriba directamente o deje aquí sus datos: la página le prepara el mensaje y lo envía usted desde su propio WhatsApp. Nada sale de esta página.</p>
+
+          <a class="btn btn-solid contact-cta" id="waCta" href="#contacto" data-i18n="contact.wa.cta">Escribir por WhatsApp</a>
+
+          <div class="channels">
+            <div class="channel">
+              <div>
+                <span class="label" data-i18n="contact.channel.whatsapp">WhatsApp</span>
+                <a class="value" id="waValue" href="#contacto">+34 642 47 30 82</a>
+              </div>
+              <button class="copy" type="button" id="copyWa" data-copy="+34 642 47 30 82" data-i18n="contact.copy">Copiar</button>
+            </div>
+            <div class="channel">
+              <div>
+                <span class="label">Telegram</span>
+                <a class="value" id="tgValue" href="#contacto">@lumiere_madrid</a>
+              </div>
+              <button class="copy" type="button" id="copyTg" data-copy="@lumiere_madrid" data-i18n="contact.copy">Copiar</button>
+            </div>
+            <div class="channel">
+              <div>
+                <span class="label" data-i18n="contact.channel.email">Correo</span>
+                <a class="value" id="mailValue" href="#contacto">concierge@lumiere-madrid.es</a>
+              </div>
+              <button class="copy" type="button" id="copyMail" data-copy="concierge@lumiere-madrid.es" data-i18n="contact.copy">Copiar</button>
+            </div>
+          </div>
+        </div>
+
+        <form class="enquiry" id="enquiry" novalidate>
+          <div class="row-2">
+            <div class="field">
+              <label for="f-nombre" data-i18n="form.name">Nombre</label>
+              <input id="f-nombre" name="nombre" type="text" data-i18n-ph="form.name.ph" placeholder="Nombre o inicial" autocomplete="given-name">
+            </div>
+            <div class="field">
+              <label for="f-fecha" data-i18n="form.date">Fecha</label>
+              <input id="f-fecha" name="fecha" type="date">
+            </div>
+          </div>
+          <div class="row-2">
+            <div class="field">
+              <label for="f-ciudad" data-i18n="form.city">Ciudad</label>
+              <input id="f-ciudad" name="ciudad" type="text" data-i18n-ph="form.city.ph" placeholder="Madrid">
+            </div>
+            <div class="field">
+              <label for="f-tipo" data-i18n="form.type">Tipo de encuentro</label>
+              <select id="f-tipo" name="tipo">
+                <option data-i18n="form.type.opt1">Cena o cóctel</option>
+                <option data-i18n="form.type.opt2">Gala o evento</option>
+                <option data-i18n="form.type.opt3">Velada completa</option>
+                <option data-i18n="form.type.opt4">Viaje o estancia</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label for="f-mensaje" data-i18n="form.message">Mensaje</label>
+            <textarea id="f-mensaje" name="mensaje" rows="3" data-i18n-ph="form.message.ph" placeholder="Perfil que le interesa, hora aproximada y cualquier detalle que ayude."></textarea>
+          </div>
+
+          <div class="draft" id="draft" aria-live="polite">
+            <span class="eyebrow" style="color:var(--accent)" data-i18n="form.draft.label">Mensaje listo — cópielo y envíelo por WhatsApp o Telegram</span>
+            <pre id="draftText"></pre>
+            <a class="btn btn-solid" id="openWa" href="#contacto" data-i18n="form.draft.open">Abrir WhatsApp con este mensaje</a>
+            <button class="btn" type="button" id="copyDraft" data-i18n="form.draft.copy">Copiar mensaje</button>
+          </div>
+
+          <button class="btn btn-solid" type="submit" data-i18n="form.submit">Preparar mensaje</button>
+          <p class="fine" data-i18n="form.fine">Esta página no envía nada por sí sola y no guarda sus datos en ningún servidor.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <span class="brand"><span class="brand-mark">Lumière</span><span class="brand-sub" data-i18n="brand.sub">Madrid</span></span>
+        <p class="fine" style="margin:16px 0 0;max-width:34ch;" data-i18n="foot.blurb">Representación privada de acompañantes de alto standing en Madrid, Marbella y Barcelona.</p>
+      </div>
+      <div>
+        <h4 data-i18n="foot.house">La casa</h4>
+        <a href="#coleccion" data-i18n="foot.link.collection">La colección</a>
+        <a href="#servicio" data-i18n="foot.link.service">Cómo funciona</a>
+        <a href="#honorarios" data-i18n="foot.link.fees">Honorarios</a>
+        <a href="#preguntas" data-i18n="foot.link.faq">Preguntas</a>
+      </div>
+      <div>
+        <h4 data-i18n="foot.h.legal">Legal</h4>
+        <a href="#contacto" data-i18n="foot.link.contact">Contacto</a>
+        <a href="#contacto" data-i18n="foot.link.legal">Aviso legal</a>
+        <a href="#contacto" data-i18n="foot.link.privacy">Privacidad</a>
+        <a href="#contacto" data-i18n="foot.link.terms">Condiciones del servicio</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span data-i18n="foot.copyright">© 2026 Lumière Madrid · Plantilla de demostración sin datos reales</span>
+      <span class="badge18" data-i18n="foot.badge18">Solo +18</span>
+    </div>
+  </div>
+</footer>
+
+<div class="overlay" id="overlay" hidden role="dialog" aria-modal="true" aria-labelledby="sheetName">
+  <div class="perfil">
+    <div class="perfil-head">
+      <div class="perfil-head-inner">
+        <a class="perfil-back" href="#coleccion" id="sheetClose">← <span data-i18n="perfil.back">Volver</span></a>
+        <span class="perfil-brand">Lumière Madrid</span>
+        <span class="perfil-tag" id="sheetTag">Perfil</span>
+      </div>
+    </div>
+
+    <div class="perfil-grid">
+      <div class="perfil-info">
+        <h3 id="sheetName">—</h3>
+        <p class="lede" id="sheetIntro" style="font-size:.95rem;color:var(--fg-soft)"></p>
+        <dl class="sheet-facts" id="sheetFacts"></dl>
+
+        <a class="btn btn-solid" href="#contacto" id="sheetCta" data-i18n="sheet.cta">Solicitar este perfil</a>
+        <p class="fine" data-i18n="sheet.fine">Retrato de demostración; no es una fotografía.</p>
+
+        <div class="gallery-block">
+          <div class="gallery-head">
+            <span class="eyebrow" data-i18n="gallery.title">Fotos del perfil</span>
+            <span class="gallery-count" id="galleryCount">0 / 8</span>
+          </div>
+          <div class="gallery" id="gallery"></div>
+          <div class="gallery-actions" id="galleryActions">
+            <button class="btn" type="button" id="uploadBtn" data-i18n="gallery.upload">Subir fotos</button>
+            <input type="file" id="fileInput" accept="image/*" multiple hidden>
+            <span class="gallery-hint" data-i18n="gallery.hint">Arrastre o pulse · JPG o PNG · máximo 8</span>
+          </div>
+          <p class="fine" id="galleryNote">Demostración: las fotos se cargan en su navegador y no se envían a ningún sitio.</p>
+        </div>
+      </div>
+
+      <div class="perfil-photos" id="perfilPhotos"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toastbar" id="toast" role="status" aria-live="polite">Copiado</div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ─────────────────────────────────────────────────────
+     DICCIONARIO ES / EN
+     ───────────────────────────────────────────────────── */
+  var I18N = {
+    es: {
+      "demo.badge": "Plantilla de demostración",
+      "demo.note": "Nombres, retratos y tarifas son ficticios · contenido sustituible antes de publicar",
+      "brand.sub": "Madrid",
+      "brand.aria": "Lumière Madrid, inicio",
+      "lang.aria": "Idioma",
+      "nav.aria": "Navegación principal",
+      "nav.collection": "La colección",
+      "nav.service": "Servicio",
+      "nav.fees": "Honorarios",
+      "nav.faq": "Preguntas",
+      "nav.contact": "Contacto",
+      "header.cta": "Contacto",
+      "header.burgerAria": "Abrir menú",
+      "mobile.close": "Cerrar",
+      "hero.eyebrow": "Agencia de acompañantes de alto standing · Madrid",
+      "hero.h1": "Compañía impecable para las <em>noches</em> que cuentan.",
+      "hero.lede": "Una representación pequeña y deliberadamente limitada: seis acompañantes, una agenda acotada cada semana y un concierge que conoce a las seis por su nombre. Cenas, galas, viajes y estancias privadas.",
+      "hero.cta1": "Ver la colección",
+      "hero.cta2": "Hablar con el concierge",
+      "panel.eyebrow": "Próximas fechas",
+      "panel.d1": "Jueves", "panel.s1": "2 libres",
+      "panel.d2": "Viernes", "panel.s2": "1 libre",
+      "panel.d3": "Sábado", "panel.s3": "Completo",
+      "panel.d4": "Domingo", "panel.s4": "1 libre",
+      "panel.cta": "Reservar <span aria-hidden=\"true\">→</span>",
+      "statement.quote": "Tres ciudades, seis nombres y una sola regla: <em>ninguna cita se improvisa</em>.",
+      "city.madrid": "Madrid", "city.marbella": "Marbella", "city.barcelona": "Barcelona",
+      "city.ibiza": "Ibiza", "city.lisbon": "Lisboa",
+      "coll.eyebrow": "01 — La colección",
+      "coll.h2": "Seis retratos, ninguna improvisación.",
+      "coll.lede": "Cada perfil se incorpora por recomendación y pasa por una entrevista presencial antes de publicarse.",
+      "coll.filterAria": "Filtrar perfiles por idioma",
+      "coll.filter.all": "Todas",
+      "coll.filter.other": "Otros idiomas",
+      "lang.es": "Español", "lang.en": "Inglés", "lang.fr": "Francés", "lang.it": "Italiano", "lang.de": "Alemán",
+      "coll.note": "Perfiles de demostración. Los retratos de esta plantilla son imágenes generadas, no fotografías: en la agencia real se sustituyen por imágenes propias de cada acompañante, publicadas con su consentimiento por escrito.",
+      "steps.eyebrow": "02 — Cómo funciona",
+      "steps.h2": "Tres pasos y una sola persona al teléfono.",
+      "steps.lede": "Sin formularios largos ni intermediarios: escríbanos, reciba una propuesta concreta y confirme.",
+      "step1.h3": "Escriba al concierge",
+      "step1.p": "WhatsApp o correo, a cualquier hora. Indique fecha, ciudad, duración y el tipo de encuentro: cena, gala, viaje o estancia.",
+      "step2.h3": "Reciba una propuesta",
+      "step2.p": "En menos de dos horas le enviamos dos o tres perfiles compatibles con su agenda, con disponibilidad y honorarios cerrados.",
+      "step3.h3": "Confirme la cita",
+      "step3.p": "Confirmación por escrito con nombre, hora y lugar. La reserva queda bloqueada desde ese momento hasta el final del encuentro.",
+      "ass1.h": "Discreción",
+      "ass1.p": "Sin listas de correo, sin cruces entre perfiles y sin datos de clientes en el móvil de nadie más.",
+      "ass2.h": "Verificación",
+      "ass2.p": "Cada acompañante es mayor de edad, está verificada en persona y tiene contrato de representación firmado.",
+      "ass3.h": "Puntualidad",
+      "ass3.p": "Confirmación diez minutos antes por el mismo canal. Si algo cambia, lo sabe usted primero.",
+      "ass4.h": "Agenda limitada",
+      "ass4.p": "Tres encuentros por semana y por acompañante. Preferimos rechazar antes que improvisar.",
+      "fees.eyebrow": "03 — Honorarios",
+      "fees.h2": "Tarifas claras, sin sorpresas de última hora.",
+      "fees.lede": "Importes de referencia por encuentro. El concierge confirma el total por escrito antes de cualquier reserva.",
+      "tier1.name": "Cita social",
+      "tier1.priceSmall": "Desde · hasta 3 horas",
+      "tier1.li1": "Cena, cóctel o evento privado",
+      "tier1.li2": "Desplazamiento dentro de Madrid incluido",
+      "tier1.li3": "Vestuario acorde al lugar",
+      "tier1.li4": "Confirmación en menos de 2 h",
+      "tier1.btn": "Solicitar <span aria-hidden=\"true\">→</span>",
+      "tier2.name": "Velada completa",
+      "tier2.priceSmall": "Desde · hasta 6 horas",
+      "tier2.li1": "Cena y continuación de la noche",
+      "tier2.li2": "Gala, estreno o evento corporativo",
+      "tier2.li3": "Acompañamiento en el idioma que elija",
+      "tier2.li4": "El mismo perfil, reservable varios días seguidos",
+      "tier2.btn": "Solicitar <span aria-hidden=\"true\">→</span>",
+      "tier3.name": "Viaje o estancia",
+      "tier3.price": "A medida",
+      "tier3.li1": "Destino nacional o internacional",
+      "tier3.li2": "Agenda y traslados coordinados",
+      "tier3.li3": "Documentación y equipaje revisados con antelación",
+      "tier3.li4": "Presupuesto cerrado por escrito",
+      "tier3.btn": "Consultar <span aria-hidden=\"true\">→</span>",
+      "fees.note": "Los honorarios cubren el tiempo de acompañamiento. No incluyen billetes, alojamiento, consumiciones ni gastos del evento, que se acuerdan aparte y siempre por escrito.",
+      "faq.eyebrow": "04 — Preguntas",
+      "faq.h2": "Lo que se pregunta antes de escribir.",
+      "faq.lede": "Si falta algo, el concierge responde sin rodeos por WhatsApp.",
+      "faq.q1": "¿Cómo se reserva una cita?",
+      "faq.a1": "Con un mensaje al concierge indicando fecha, ciudad, duración y tipo de encuentro. Recibirá dos o tres propuestas y confirmará la que prefiera. La reserva existe cuando hay confirmación por escrito.",
+      "faq.q2": "¿Qué incluyen los honorarios?",
+      "faq.a2": "El tiempo de acompañamiento y el desplazamiento dentro de la ciudad acordada. Billetes, alojamiento, consumiciones y gastos del evento se acuerdan aparte y se detallan antes de confirmar.",
+      "faq.q3": "¿Se pide anticipo?",
+      "faq.a3": "Para citas en Madrid, no. Para viajes y desplazamientos fuera de la ciudad se solicita una señal que cubre el transporte, siempre con comprobante y condiciones por escrito.",
+      "faq.q4": "¿Cómo se verifica la edad?",
+      "faq.a4": "Todas las acompañantes acreditan ser mayores de 18 años con documento en la entrevista presencial previa a su publicación. El servicio se dirige exclusivamente a personas adultas.",
+      "faq.q5": "¿Las fotografías son reales?",
+      "faq.a5": "En esta plantilla, no: los retratos son imágenes de demostración. En una agencia real se publican fotografías propias de cada acompañante, cedidas con consentimiento escrito y actualizadas en cada renovación.",
+      "contact.eyebrow": "05 — Contacto",
+      "contact.h2": "El concierge responde en menos de dos horas.",
+      "contact.sub": "Atención las 24 horas. Conversación privada y sin registro público.",
+      "contact.lede": "Escriba directamente o deje aquí sus datos: la página le prepara el mensaje y lo envía usted desde su propio WhatsApp. Nada sale de esta página.",
+      "contact.channel.whatsapp": "WhatsApp",
+      "contact.channel.email": "Correo",
+      "contact.copy": "Copiar",
+      "contact.wa.cta": "Escribir por WhatsApp",
+      "header.phoneAria": "Escribir por WhatsApp",
+      "form.draft.open": "Abrir WhatsApp con este mensaje",
+      "sheet.wa.prefill": "Hola, me interesa el perfil de {nombre}.",
+      "form.name": "Nombre",
+      "form.name.ph": "Nombre o inicial",
+      "form.date": "Fecha",
+      "form.city": "Ciudad",
+      "form.city.ph": "Madrid",
+      "form.type": "Tipo de encuentro",
+      "form.type.opt1": "Cena o cóctel",
+      "form.type.opt2": "Gala o evento",
+      "form.type.opt3": "Velada completa",
+      "form.type.opt4": "Viaje o estancia",
+      "form.message": "Mensaje",
+      "form.message.ph": "Perfil que le interesa, hora aproximada y cualquier detalle que ayude.",
+      "form.submit": "Preparar mensaje",
+      "form.draft.label": "Mensaje listo — cópielo y envíelo por WhatsApp o Telegram",
+      "form.draft.copy": "Copiar mensaje",
+      "form.fine": "Esta página no envía nada por sí sola y no guarda sus datos en ningún servidor.",
+      "foot.blurb": "Representación privada de acompañantes de alto standing en Madrid, Marbella y Barcelona.",
+      "foot.house": "La casa",
+      "foot.link.collection": "La colección",
+      "foot.link.service": "Cómo funciona",
+      "foot.link.fees": "Honorarios",
+      "foot.link.faq": "Preguntas",
+      "foot.h.legal": "Legal",
+      "foot.link.contact": "Contacto",
+      "foot.link.legal": "Aviso legal",
+      "foot.link.privacy": "Privacidad",
+      "foot.link.terms": "Condiciones del servicio",
+      "foot.copyright": "© 2026 Lumière Madrid · Plantilla de demostración sin datos reales",
+      "foot.badge18": "Solo +18",
+      "perfil.back": "Volver",
+      "sheet.closeAria": "Cerrar perfil",
+      "sheet.tag": "Perfil",
+      "sheet.cta": "Solicitar este perfil",
+      "sheet.fine": "Retrato de demostración; no es una fotografía.",
+      "sheet.fact.city": "Ciudad",
+      "sheet.fact.height": "Altura",
+      "sheet.fact.langs": "Idiomas",
+      "sheet.fact.avail": "Disponibilidad",
+      "sheet.fact.fee": "Honorarios",
+      "gallery.title": "Fotos del perfil",
+      "gallery.upload": "Subir fotos",
+      "gallery.hint": "Arrastre o pulse · JPG o PNG · máximo 8",
+      "gallery.note": "Demostración: las fotos se cargan en su navegador y no se envían a ningún sitio.",
+      "gallery.noteRemote": "Fotos publicadas desde el panel del cliente: se actualizan al instante, sin tocar el código.",
+      "gallery.emptyPublic": "Todavía no hay fotos publicadas en este perfil.",
+      "gallery.add": "Añadir foto",
+      "gallery.remove": "Quitar foto",
+      "gallery.cover": "Usar como portada",
+      "gallery.max": "Máximo 8 fotos por perfil: algunas no se han añadido.",
+      "gallery.notImage": "Ese archivo no es una imagen.",
+      "gallery.noStorage": "Las fotos no caben en el almacenamiento del navegador; se mantienen solo mientras la página esté abierta.",
+      "card.age": "{edad} años",
+      "card.price.from": "desde {n} €",
+      "card.aria": "Ver el perfil de {nombre}",
+      "card.prev": "Foto anterior",
+      "card.next": "Foto siguiente",
+      "toast.copied": "Copiado: {texto}",
+      "toast.copyManual": "Seleccione el texto y copie a mano",
+      "toast.messageCopied": "Mensaje copiado",
+      "draft.greeting": "Hola, escribo a Lumière Madrid.",
+      "draft.name": "Nombre:",
+      "draft.date": "Fecha:",
+      "draft.city": "Ciudad:",
+      "draft.type": "Tipo de encuentro:",
+      "draft.details": "Detalles:",
+      "profile.valentina.tag": "Selección de la semana",
+      "profile.valentina.speciality": "Cenas y galas",
+      "profile.valentina.height": "1,74 m",
+      "profile.valentina.intro": "Formada en relaciones públicas, se mueve igual de bien en una mesa de ocho que en un cóctel de empresa. Conversación ágil, discreta y con criterio propio.",
+      "profile.valentina.avail": "Martes a sábado · 2 noches libres",
+      "profile.sofia.tag": "Agenda corta",
+      "profile.sofia.speciality": "Cócteles y eventos privados",
+      "profile.sofia.height": "1,70 m",
+      "profile.sofia.intro": "Trabaja como traductora y acompaña sobre todo en eventos culturales y estrenos. Prefiere las noches tranquilas a las multitudes.",
+      "profile.sofia.avail": "Jueves a domingo · 3 noches libres",
+      "profile.carlota.tag": "Eventos corporativos",
+      "profile.carlota.speciality": "Cenas de empresa y protocolo",
+      "profile.carlota.height": "1,72 m",
+      "profile.carlota.intro": "Diez años de sala en hostelería. Sabe cuándo hablar, cuándo callar y cómo llevar una mesa de directivos sin que nadie lo note.",
+      "profile.carlota.avail": "Lunes a viernes · 2 noches libres",
+      "profile.naomi.tag": "Desplazamientos",
+      "profile.naomi.speciality": "Viajes y estancias",
+      "profile.naomi.height": "1,76 m",
+      "profile.naomi.intro": "Reserva su agenda por semanas y viaja con frecuencia. Tiene su propio criterio sobre destinos, equipaje y horarios.",
+      "profile.naomi.avail": "Por semanas · consultar",
+      "profile.irene.tag": "Nueva incorporación",
+      "profile.irene.speciality": "Cenas y conversación",
+      "profile.irene.height": "1,68 m",
+      "profile.irene.intro": "La más joven de la casa y la que mejor sostiene una conversación larga. Estudia el último curso de Derecho y le interesa la mesa, no el escaparate.",
+      "profile.irene.avail": "Miércoles a sábado · 2 noches libres",
+      "profile.alba.tag": "Temporada de verano",
+      "profile.alba.speciality": "Veladas y eventos al aire libre",
+      "profile.alba.height": "1,71 m",
+      "profile.alba.intro": "Afincada en la costa, conoce cada terraza entre Marbella y Puerto Banús. Elegante sin proponérselo y muy buena anfitriona.",
+      "profile.alba.avail": "Junio a septiembre · 3 noches libres"
+    },
+
+    en: {
+      "demo.badge": "Demonstration template",
+      "demo.note": "Names, portraits and rates are fictitious · content to be replaced before publication",
+      "brand.sub": "Madrid",
+      "brand.aria": "Lumière Madrid, home",
+      "lang.aria": "Language",
+      "nav.aria": "Main navigation",
+      "nav.collection": "The collection",
+      "nav.service": "Service",
+      "nav.fees": "Fees",
+      "nav.faq": "Questions",
+      "nav.contact": "Contact",
+      "header.cta": "Contact",
+      "header.burgerAria": "Open menu",
+      "mobile.close": "Close",
+      "hero.eyebrow": "A high-end companionship agency · Madrid",
+      "hero.h1": "Impeccable company for the <em>nights</em> that matter.",
+      "hero.lede": "A small, deliberately limited roster: six companions, a capped diary each week, and a concierge who knows all six by name. Dinners, galas, travel and private stays.",
+      "hero.cta1": "View the collection",
+      "hero.cta2": "Speak to the concierge",
+      "panel.eyebrow": "Coming dates",
+      "panel.d1": "Thursday", "panel.s1": "2 open",
+      "panel.d2": "Friday", "panel.s2": "1 open",
+      "panel.d3": "Saturday", "panel.s3": "Fully booked",
+      "panel.d4": "Sunday", "panel.s4": "1 open",
+      "panel.cta": "Book <span aria-hidden=\"true\">→</span>",
+      "statement.quote": "Three cities, six names and a single rule: <em>nothing is improvised</em>.",
+      "city.madrid": "Madrid", "city.marbella": "Marbella", "city.barcelona": "Barcelona",
+      "city.ibiza": "Ibiza", "city.lisbon": "Lisbon",
+      "coll.eyebrow": "01 — The collection",
+      "coll.h2": "Six portraits, nothing left to chance.",
+      "coll.lede": "Each profile joins by recommendation and sits an in-person interview before publication.",
+      "coll.filterAria": "Filter profiles by language",
+      "coll.filter.all": "All",
+      "coll.filter.other": "Other languages",
+      "lang.es": "Spanish", "lang.en": "English", "lang.fr": "French", "lang.it": "Italian", "lang.de": "German",
+      "coll.note": "Demonstration profiles. The portraits here are generated images, not photographs: in a live agency they are replaced by each companion's own pictures, published with her written consent.",
+      "steps.eyebrow": "02 — How it works",
+      "steps.h2": "Three steps and one person on the line.",
+      "steps.lede": "No long forms, no intermediaries: write to us, receive a concrete proposal, confirm.",
+      "step1.h3": "Write to the concierge",
+      "step1.p": "WhatsApp or email, at any hour. Give the date, city, duration and type of occasion: dinner, gala, travel or stay.",
+      "step2.h3": "Receive a proposal",
+      "step2.p": "Within two hours we send two or three profiles suited to your diary, with availability and fees agreed in full.",
+      "step3.h3": "Confirm the appointment",
+      "step3.p": "Written confirmation with name, time and place. The booking is held from that moment until the end of the occasion.",
+      "ass1.h": "Discretion",
+      "ass1.p": "No mailing lists, no cross-references between profiles, no client details on anyone else's phone.",
+      "ass2.h": "Verification",
+      "ass2.p": "Every companion is over eighteen, verified in person and under a signed representation contract.",
+      "ass3.h": "Punctuality",
+      "ass3.p": "A confirmation ten minutes beforehand on the same channel. If anything changes, you are the first to know.",
+      "ass4.h": "A limited diary",
+      "ass4.p": "Three occasions a week per companion. We would rather decline than improvise.",
+      "fees.eyebrow": "03 — Fees",
+      "fees.h2": "Clear rates, no surprises at the end.",
+      "fees.lede": "Reference amounts per occasion. The concierge confirms the total in writing before any booking.",
+      "tier1.name": "Social occasion",
+      "tier1.priceSmall": "From · up to 3 hours",
+      "tier1.li1": "Dinner, cocktails or a private event",
+      "tier1.li2": "Travel within Madrid included",
+      "tier1.li3": "Dress suited to the venue",
+      "tier1.li4": "Confirmation within 2 hours",
+      "tier1.btn": "Request <span aria-hidden=\"true\">→</span>",
+      "tier2.name": "The full evening",
+      "tier2.priceSmall": "From · up to 6 hours",
+      "tier2.li1": "Dinner and the rest of the night",
+      "tier2.li2": "Gala, première or corporate event",
+      "tier2.li3": "Conversation in the language you choose",
+      "tier2.li4": "The same companion, bookable over several days",
+      "tier2.btn": "Request <span aria-hidden=\"true\">→</span>",
+      "tier3.name": "Travel or stay",
+      "tier3.price": "By arrangement",
+      "tier3.li1": "Domestic or international destination",
+      "tier3.li2": "Diary and transfers coordinated",
+      "tier3.li3": "Documents and luggage reviewed in advance",
+      "tier3.li4": "A fixed quotation in writing",
+      "tier3.btn": "Enquire <span aria-hidden=\"true\">→</span>",
+      "fees.note": "Fees cover the time of companionship. They do not include tickets, accommodation, drinks or event costs, which are agreed separately and always in writing.",
+      "faq.eyebrow": "04 — Questions",
+      "faq.h2": "What is asked before writing.",
+      "faq.lede": "If something is missing, the concierge answers plainly on WhatsApp.",
+      "faq.q1": "How is an appointment booked?",
+      "faq.a1": "With a message to the concierge giving date, city, duration and type of occasion. You will receive two or three proposals and confirm the one you prefer. The booking exists once it is confirmed in writing.",
+      "faq.q2": "What do the fees include?",
+      "faq.a2": "The time of companionship and travel within the agreed city. Tickets, accommodation, drinks and event costs are agreed separately and set out before confirmation.",
+      "faq.q3": "Is a deposit required?",
+      "faq.a3": "For appointments in Madrid, no. For travel and journeys beyond the city, a deposit covering transport is requested, always with a receipt and written terms.",
+      "faq.q4": "How is age verified?",
+      "faq.a4": "Every companion proves she is over 18 with documents at the in-person interview held before publication. The agency serves adults only.",
+      "faq.q5": "Are the photographs real?",
+      "faq.a5": "In this template, no: the portraits are demonstration images. A live agency publishes each companion's own photographs, supplied with written consent and renewed at each update.",
+      "contact.eyebrow": "05 — Contact",
+      "contact.h2": "The concierge replies within two hours.",
+      "contact.sub": "Available around the clock. A private conversation, with no public record.",
+      "contact.lede": "Write to us directly, or leave your details here: the page prepares the message and you send it from your own WhatsApp. Nothing leaves this page.",
+      "contact.channel.whatsapp": "WhatsApp",
+      "contact.channel.email": "Email",
+      "contact.copy": "Copy",
+      "contact.wa.cta": "Message on WhatsApp",
+      "header.phoneAria": "Message on WhatsApp",
+      "form.draft.open": "Open WhatsApp with this message",
+      "sheet.wa.prefill": "Hello, I am interested in {nombre}'s profile.",
+      "form.name": "Name",
+      "form.name.ph": "Name or initial",
+      "form.date": "Date",
+      "form.city": "City",
+      "form.city.ph": "Madrid",
+      "form.type": "Type of occasion",
+      "form.type.opt1": "Dinner or cocktails",
+      "form.type.opt2": "Gala or event",
+      "form.type.opt3": "The full evening",
+      "form.type.opt4": "Travel or stay",
+      "form.message": "Message",
+      "form.message.ph": "The profile you have in mind, an approximate time and anything else that helps.",
+      "form.submit": "Prepare message",
+      "form.draft.label": "Message ready — copy it and send it via WhatsApp or Telegram",
+      "form.draft.copy": "Copy message",
+      "form.fine": "This page sends nothing on its own and stores your details on no server.",
+      "foot.blurb": "Private representation of high-end companions in Madrid, Marbella and Barcelona.",
+      "foot.house": "The house",
+      "foot.link.collection": "The collection",
+      "foot.link.service": "How it works",
+      "foot.link.fees": "Fees",
+      "foot.link.faq": "Questions",
+      "foot.h.legal": "Legal",
+      "foot.link.contact": "Contact",
+      "foot.link.legal": "Legal notice",
+      "foot.link.privacy": "Privacy",
+      "foot.link.terms": "Terms of service",
+      "foot.copyright": "© 2026 Lumière Madrid · Demonstration template, no real data",
+      "foot.badge18": "18+ only",
+      "perfil.back": "Back",
+      "sheet.closeAria": "Close profile",
+      "sheet.tag": "Profile",
+      "sheet.cta": "Request this profile",
+      "sheet.fine": "Demonstration portrait, not a photograph.",
+      "sheet.fact.city": "City",
+      "sheet.fact.height": "Height",
+      "sheet.fact.langs": "Languages",
+      "sheet.fact.avail": "Availability",
+      "sheet.fact.fee": "Fee",
+      "gallery.title": "Profile photos",
+      "gallery.upload": "Upload photos",
+      "gallery.hint": "Drag or click · JPG or PNG · up to 8",
+      "gallery.note": "Demonstration: photos load in your browser and are not sent anywhere.",
+      "gallery.noteRemote": "Photos published from the client panel: they update instantly, with no code change.",
+      "gallery.emptyPublic": "No photos published for this profile yet.",
+      "gallery.add": "Add photo",
+      "gallery.remove": "Remove photo",
+      "gallery.cover": "Use as cover",
+      "gallery.max": "Up to 8 photos per profile: some were not added.",
+      "gallery.notImage": "That file is not an image.",
+      "gallery.noStorage": "The photos do not fit in browser storage; they will only last while this page is open.",
+      "card.age": "{edad}",
+      "card.price.from": "from €{n}",
+      "card.aria": "View {nombre}'s profile",
+      "card.prev": "Previous photo",
+      "card.next": "Next photo",
+      "toast.copied": "Copied: {texto}",
+      "toast.copyManual": "Select the text and copy it by hand",
+      "toast.messageCopied": "Message copied",
+      "draft.greeting": "Hello, I am writing to Lumière Madrid.",
+      "draft.name": "Name:",
+      "draft.date": "Date:",
+      "draft.city": "City:",
+      "draft.type": "Type of occasion:",
+      "draft.details": "Details:",
+      "profile.valentina.tag": "Selection of the week",
+      "profile.valentina.speciality": "Dinners and galas",
+      "profile.valentina.height": "1.74 m",
+      "profile.valentina.intro": "Trained in public relations, equally at ease at a table of eight or at a corporate cocktail. Quick, discreet conversation, with a mind of her own.",
+      "profile.valentina.avail": "Tuesday to Saturday · 2 nights open",
+      "profile.sofia.tag": "Short diary",
+      "profile.sofia.speciality": "Cocktails and private events",
+      "profile.sofia.height": "1.70 m",
+      "profile.sofia.intro": "She works as a translator and accompanies mainly at cultural events and premières. She prefers quiet nights to crowds.",
+      "profile.sofia.avail": "Thursday to Sunday · 3 nights open",
+      "profile.carlota.tag": "Corporate events",
+      "profile.carlota.speciality": "Corporate dinners and protocol",
+      "profile.carlota.height": "1.72 m",
+      "profile.carlota.intro": "Ten years of restaurant service. She knows when to speak, when to stay silent, and how to carry a table of executives without anyone noticing.",
+      "profile.carlota.avail": "Monday to Friday · 2 nights open",
+      "profile.naomi.tag": "Travel",
+      "profile.naomi.speciality": "Travel and stays",
+      "profile.naomi.height": "1.76 m",
+      "profile.naomi.intro": "She books her diary by the week and travels often. She has firm views on destinations, luggage and timetables.",
+      "profile.naomi.avail": "By the week · on request",
+      "profile.irene.tag": "New arrival",
+      "profile.irene.speciality": "Dinners and conversation",
+      "profile.irene.height": "1.68 m",
+      "profile.irene.intro": "The youngest in the house, and the best at sustaining a long conversation. In her final year of law, she cares about the table, not the shop window.",
+      "profile.irene.avail": "Wednesday to Saturday · 2 nights open",
+      "profile.alba.tag": "Summer season",
+      "profile.alba.speciality": "Evenings and open-air events",
+      "profile.alba.height": "1.71 m",
+      "profile.alba.intro": "Based on the coast, she knows every terrace between Marbella and Puerto Banús. Elegant without trying, and an excellent host.",
+      "profile.alba.avail": "June to September · 3 nights open"
+    }
+  };
+
+  var STORAGE_KEY = "lumiere-lang";
+  var lang = "es";
+
+  try {
+    var stored = localStorage.getItem(STORAGE_KEY);
+    if (stored === "en" || stored === "es") { lang = stored; }
+  } catch (err) { /* almacenamiento bloqueado */ }
+
+  function t(key) {
+    var dict = I18N[lang] || I18N.es;
+    if (dict[key] !== undefined) { return dict[key]; }
+    if (I18N.es[key] !== undefined) { return I18N.es[key]; }
+    return key;
+  }
+
+  function fill(template, vars) {
+    return template.replace(/\{(\w+)\}/g, function (m, name) {
+      return vars[name] !== undefined ? vars[name] : m;
+    });
+  }
+
+  function all(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
+
+  /* ─────────────────────────────────────────────────────
+     CONTACTOS — el único sitio donde se cambian
+     phoneE164: solo dígitos, con prefijo de país y sin «+»
+     ───────────────────────────────────────────────────── */
+  var CONTACT = {
+    phoneDisplay: "+34 642 47 30 82",
+    phoneE164: "34642473082",
+    telegram: "lumiere_madrid",
+    email: "concierge@lumiere-madrid.es"
+  };
+
+  function waLink(text) {
+    var base = "https://wa.me/" + CONTACT.phoneE164;
+    return text ? base + "?text=" + encodeURIComponent(text) : base;
+  }
+
+  function external(el, href) {
+    el.setAttribute("href", href);
+    el.setAttribute("target", "_blank");
+    el.setAttribute("rel", "noopener");
+  }
+
+  function applyContacts() {
+    var headerPhone = document.getElementById("headerPhone");
+    headerPhone.textContent = CONTACT.phoneDisplay;
+    external(headerPhone, waLink());
+
+    var waValue = document.getElementById("waValue");
+    waValue.textContent = CONTACT.phoneDisplay;
+    external(waValue, waLink());
+    document.getElementById("copyWa").setAttribute("data-copy", CONTACT.phoneDisplay);
+    external(document.getElementById("waCta"), waLink());
+    external(document.getElementById("heroWa"), waLink());
+
+    var tgValue = document.getElementById("tgValue");
+    tgValue.textContent = "@" + CONTACT.telegram;
+    external(tgValue, "https://t.me/" + CONTACT.telegram);
+    document.getElementById("copyTg").setAttribute("data-copy", "@" + CONTACT.telegram);
+
+    var mailValue = document.getElementById("mailValue");
+    mailValue.textContent = CONTACT.email;
+    mailValue.setAttribute("href", "mailto:" + CONTACT.email);
+    document.getElementById("copyMail").setAttribute("data-copy", CONTACT.email);
+  }
+
+  /* ─────────────────────────────────────────────────────
+     DATOS DE DEMOSTRACIÓN
+     ───────────────────────────────────────────────────── */
+  var PROFILES = [
+    { name: "Valentina", mono: "V", edad: 27, key: "valentina", cityKey: "city.madrid", desde: 380, shade: 2, langs: ["es", "en", "otros"], langKeys: ["lang.es", "lang.en", "lang.it"] },
+    { name: "Sofía", mono: "S", edad: 25, key: "sofia", cityKey: "city.madrid", desde: 350, shade: 3, langs: ["es", "en"], langKeys: ["lang.es", "lang.en"] },
+    { name: "Carlota", mono: "C", edad: 31, key: "carlota", cityKey: "city.madrid", desde: 420, shade: 4, langs: ["es", "fr"], langKeys: ["lang.es", "lang.fr"] },
+    { name: "Naomi", mono: "N", edad: 28, key: "naomi", cityKey: "city.barcelona", desde: 480, shade: 5, langs: ["en", "es"], langKeys: ["lang.en", "lang.es"] },
+    { name: "Irene", mono: "I", edad: 24, key: "irene", cityKey: "city.madrid", desde: 340, shade: 1, langs: ["es", "en", "otros"], langKeys: ["lang.es", "lang.en", "lang.de"] },
+    { name: "Alba", mono: "A", edad: 29, key: "alba", cityKey: "city.marbella", desde: 450, shade: 6, langs: ["es", "en"], langKeys: ["lang.es", "lang.en"] }
+  ];
+
+  /* ─────────────────────────────────────────────────────
+     FOTOS DEL PERFIL — hasta 8 por perfil
+     Se guardan en el navegador del visitante, nunca se suben.
+     ───────────────────────────────────────────────────── */
+  var MAX_PHOTOS = 8;
+  var PHOTO_STORE = "lumiere-photos";
+  var photos = {};
+  var currentProfile = null;
+  var storageWarned = false;
+  var serverMode = false;
+
+  /* Gancho de producción: fotos fijas por perfil, p. ej.
+     { valentina: ["fotos/valentina-01.jpg", "fotos/valentina-02.jpg"] } */
+  var SEED_PHOTOS = {};
+
+  try {
+    var savedPhotos = JSON.parse(localStorage.getItem(PHOTO_STORE) || "{}");
+    if (savedPhotos && typeof savedPhotos === "object") { photos = savedPhotos; }
+  } catch (err) { photos = {}; }
+
+  Object.keys(SEED_PHOTOS).forEach(function (k) {
+    if (!photos[k] || !photos[k].length) { photos[k] = SEED_PHOTOS[k].slice(0, MAX_PHOTOS); }
+  });
+
+  function savePhotos() {
+    try {
+      localStorage.setItem(PHOTO_STORE, JSON.stringify(photos));
+    } catch (err) {
+      if (!storageWarned) {
+        storageWarned = true;
+        flash(t("gallery.noStorage"));
+      }
+    }
+  }
+
+  function photoList(p) {
+    if (!photos[p.key]) { photos[p.key] = []; }
+    return photos[p.key];
+  }
+
+  function coverOf(p) {
+    var list = photos[p.key];
+    return list && list.length ? list[0] : null;
+  }
+
+  /* la tarjeta lleva todas las fotos del perfil apiladas; la primera es la
+     que manda en el encuadre y las demás entran por turno */
+  function frameContent(p) {
+    var list = photos[p.key] || [];
+    if (list.length) {
+      return list.map(function (src, i) {
+        return '<img class="photo-fg photo-slide' + (i ? "" : " is-active") + '"' +
+               ' src="' + src + '"' +
+               ' alt="' + (i ? "" : p.name) + '"' +
+               (i ? ' aria-hidden="true"' : "") + '>';
+      }).join("");
+    }
+    return '<span class="mono">' + p.mono + '</span>';
+  }
+
+  /* la moldura se adapta a la proporción de la fotografía: las verticales
+     llenan el marco del diseño y las horizontales reciben un marco con su
+     misma proporción, de modo que nunca hay recorte ni deformación */
+  function fitFrame(frame) {
+    if (!frame) { return; }
+    var img = frame.querySelector("img.photo-fg");
+    if (!img) {
+      frame.style.aspectRatio = "";
+      frame.classList.remove("frame-wide");
+      return;
+    }
+    function apply() {
+      var w = img.naturalWidth, h = img.naturalHeight;
+      if (!w || !h) { return; }
+      if (w > h) {
+        var ratio = Math.min(w / h, 2.4);
+        frame.style.aspectRatio = (ratio * 1000) + " / 1000";
+        frame.classList.add("frame-wide");
+      } else {
+        frame.style.aspectRatio = "";
+        frame.classList.remove("frame-wide");
+      }
+    }
+    if (img.complete && img.naturalWidth) { apply(); }
+    img.addEventListener("load", apply);
+  }
+
+  /* todas las fotos del perfil, una debajo de otra, tal como se publican */
+  function renderProfilePhotos() {
+    var box = document.getElementById("perfilPhotos");
+    if (!box) { return; }
+    box.innerHTML = "";
+    if (!currentProfile) { return; }
+
+    var list = photoList(currentProfile);
+    if (!list.length) {
+      var blank = document.createElement("div");
+      blank.className = "perfil-empty";
+      blank.textContent = currentProfile.mono;
+      box.appendChild(blank);
+      return;
+    }
+    list.forEach(function (src, i) {
+      var fig = document.createElement("figure");
+      fig.className = "perfil-photo";
+      fig.id = "foto-" + i;
+      var img = document.createElement("img");
+      img.src = src;
+      img.alt = currentProfile.name + " · " + (i + 1);
+      img.loading = i ? "lazy" : "eager";
+      fig.appendChild(img);
+      box.appendChild(fig);
+    });
+  }
+
+  function resizeImage(file, done) {
+    var reader = new FileReader();
+    reader.onload = function () {
+      var img = new Image();
+      img.onload = function () {
+        try {
+          var max = 800;
+          var scale = Math.min(1, max / Math.max(img.width, img.height));
+          var c = document.createElement("canvas");
+          c.width = Math.max(1, Math.round(img.width * scale));
+          c.height = Math.max(1, Math.round(img.height * scale));
+          c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+          done(c.toDataURL("image/jpeg", 0.72));
+        } catch (err) { done(null); }
+      };
+      img.onerror = function () { done(null); };
+      img.src = reader.result;
+    };
+    reader.onerror = function () { done(null); };
+    reader.readAsDataURL(file);
+  }
+
+  function renderGallery() {
+    if (!currentProfile) { return; }
+    var list = photoList(currentProfile);
+    var gallery = document.getElementById("gallery");
+    gallery.innerHTML = "";
+
+    var actions = document.getElementById("galleryActions");
+    var note = document.getElementById("galleryNote");
+    actions.hidden = serverMode;
+    note.textContent = t(serverMode ? "gallery.noteRemote" : "gallery.note");
+
+    var shown = serverMode ? list.length : MAX_PHOTOS;
+    for (var i = 0; i < shown; i++) {
+      if (list[i]) {
+        gallery.appendChild(photoSlot(list[i], i, serverMode));
+      } else {
+        var empty = document.createElement("button");
+        empty.type = "button";
+        empty.className = "slot slot-empty";
+        empty.textContent = "+";
+        empty.setAttribute("aria-label", t("gallery.add"));
+        empty.addEventListener("click", pickFiles);
+        gallery.appendChild(empty);
+      }
+    }
+
+    document.getElementById("galleryCount").textContent = list.length + " / " + MAX_PHOTOS;
+    document.getElementById("uploadBtn").disabled = list.length >= MAX_PHOTOS;
+
+    if (serverMode && !list.length) {
+      var blank = document.createElement("p");
+      blank.className = "fine";
+      blank.textContent = t("gallery.emptyPublic");
+      gallery.appendChild(blank);
+    }
+  }
+
+  function photoSlot(src, index, readOnly) {
+    var cell = document.createElement("div");
+    cell.className = "slot";
+    if (!readOnly) { cell.title = t("gallery.cover"); }
+    cell.innerHTML = '<img src="' + src + '" alt="">';
+
+    cell.addEventListener("click", function () {
+      if (readOnly) {
+        var target = document.getElementById("foto-" + index);
+        if (target && target.scrollIntoView) { target.scrollIntoView({ behavior: "smooth", block: "center" }); }
+        return;
+      }
+      var list = photoList(currentProfile);
+      var moved = list.splice(index, 1)[0];
+      list.unshift(moved);
+      savePhotos();
+      renderGallery();
+      renderProfilePhotos();
+      renderProfiles();
+    });
+
+    if (readOnly) { return cell; }
+
+    var del = document.createElement("button");
+    del.type = "button";
+    del.className = "slot-x";
+    del.textContent = "×";
+    del.setAttribute("aria-label", t("gallery.remove"));
+    del.addEventListener("click", function (ev) {
+      ev.stopPropagation();
+      photoList(currentProfile).splice(index, 1);
+      savePhotos();
+      renderGallery();
+      renderProfilePhotos();
+      renderProfiles();
+    });
+
+    cell.appendChild(del);
+    return cell;
+  }
+
+  function pickFiles() {
+    document.getElementById("fileInput").click();
+  }
+
+  function handleFiles(files) {
+    if (!currentProfile) { return; }
+    var list = photoList(currentProfile);
+    var room = MAX_PHOTOS - list.length;
+    var picked = Array.prototype.slice.call(files || []).filter(function (f) {
+      return /^image\//.test(f.type);
+    });
+
+    if (!picked.length) {
+      flash(t("gallery.notImage"));
+      return;
+    }
+    if (picked.length > room) { flash(t("gallery.max")); }
+    picked = picked.slice(0, room);
+    if (!picked.length) { return; }
+
+    var pending = picked.length;
+    picked.forEach(function (file) {
+      resizeImage(file, function (dataUrl) {
+        if (dataUrl && list.length < MAX_PHOTOS) { list.push(dataUrl); }
+        pending--;
+        if (pending === 0) {
+          savePhotos();
+          renderGallery();
+          renderProfilePhotos();
+          renderProfiles();
+        }
+      });
+    });
+  }
+
+  var fileInput = document.getElementById("fileInput");
+  fileInput.addEventListener("change", function () {
+    handleFiles(fileInput.files);
+    fileInput.value = "";
+  });
+  document.getElementById("uploadBtn").addEventListener("click", pickFiles);
+
+  var galleryEl = document.getElementById("gallery");
+  ["dragenter", "dragover"].forEach(function (ev) {
+    galleryEl.addEventListener(ev, function (e) {
+      e.preventDefault();
+      galleryEl.classList.add("is-drop");
+    });
+  });
+  ["dragleave", "dragend"].forEach(function (ev) {
+    galleryEl.addEventListener(ev, function () {
+      galleryEl.classList.remove("is-drop");
+    });
+  });
+  galleryEl.addEventListener("drop", function (e) {
+    e.preventDefault();
+    galleryEl.classList.remove("is-drop");
+    if (e.dataTransfer && e.dataTransfer.files) { handleFiles(e.dataTransfer.files); }
+  });
+
+  /* Sirve el sitio desde server.js: las fotos las publica el cliente
+     desde /admin. Abierto como archivo local, se mantiene el modo demo. */
+  function loadRemotePhotos() {
+    if (location.protocol === "file:") { return; }
+    fetch("api/photos", { headers: { "Accept": "application/json" } })
+      .then(function (res) { return res.ok ? res.json() : null; })
+      .then(function (data) {
+        if (!data || typeof data !== "object") { return; }
+        serverMode = true;
+        photos = {};
+        Object.keys(data).forEach(function (k) {
+          if (Array.isArray(data[k]) && data[k].length) {
+            photos[k] = data[k].slice(0, MAX_PHOTOS);
+          }
+        });
+        renderProfiles();
+        if (currentProfile) {
+          renderProfilePhotos();
+          renderGallery();
+        } else {
+          syncFromHash();
+        }
+      })
+      .catch(function () { /* sin servidor: modo demostración */ });
+  }
+
+  var grid = document.getElementById("profileGrid");
+  var activeFilter = "all";
+  var lastFocus = null;
+
+  function profileField(p, field) { return t("profile." + p.key + "." + field); }
+
+  function renderProfiles() {
+    grid.innerHTML = "";
+    grid.classList.toggle("is-filtered", activeFilter !== "all");
+
+    PROFILES.forEach(function (p) {
+      var visible = activeFilter === "all" || p.langs.indexOf(activeFilter) !== -1;
+
+      /* la tarjeta es un div con role=button para poder llevar dentro las flechas */
+      var card = document.createElement("div");
+      card.className = "card";
+      card.hidden = !visible;
+      card.setAttribute("role", "button");
+      card.setAttribute("tabindex", "0");
+      card.setAttribute("aria-label", fill(t("card.aria"), { nombre: p.name }));
+
+      var frame = document.createElement("div");
+      frame.className = "card-frame";
+      var list = photos[p.key] || [];
+      frame.innerHTML =
+        '<div class="frame shade-' + p.shade + '">' + frameContent(p) + '</div>' +
+        '<span class="card-tag">' + profileField(p, "tag") + '</span>' +
+        (list.length > 1 ? '<span class="card-dots" aria-hidden="true">' +
+          list.map(function (_, i) {
+            return '<i' + (i ? "" : ' class="is-active"') + '></i>';
+          }).join("") + '</span>' : "") +
+        (list.length > 1 ? '<span class="card-nav">' +
+          '<button class="card-arrow" type="button" data-step="-1" aria-label="' +
+            t("card.prev") + '">‹</button>' +
+          '<button class="card-arrow" type="button" data-step="1" aria-label="' +
+            t("card.next") + '">›</button>' +
+          '</span>' : "");
+      fitFrame(frame.firstChild);
+      card.dataset.slide = "0";
+      /* la tarjeta se detiene mientras el cursor está encima */
+      frame.addEventListener("mouseenter", function () { card.dataset.paused = "1"; });
+      frame.addEventListener("mouseleave", function () { card.dataset.paused = "0"; });
+
+      var top = document.createElement("div");
+      top.className = "card-top";
+      top.innerHTML =
+        '<span class="card-name">' + p.name + '</span>' +
+        '<span class="card-price">' + fill(t("card.price.from"), { n: p.desde }) + '</span>';
+
+      var meta = document.createElement("div");
+      meta.className = "card-meta";
+      meta.innerHTML =
+        '<span>' + fill(t("card.age"), { edad: p.edad }) + '</span>' +
+        '<span>' + profileField(p, "height") + '</span>' +
+        '<span>' + t(p.cityKey) + '</span>';
+
+      var meta2 = document.createElement("div");
+      meta2.className = "card-meta";
+      meta2.style.color = "var(--fg-soft)";
+      meta2.textContent = p.langKeys.map(function (k) { return t(k); }).join(" · ");
+
+      card.appendChild(frame);
+      card.appendChild(top);
+      card.appendChild(meta);
+      card.appendChild(meta2);
+
+      card.addEventListener("click", function () { openSheet(p); });
+
+      /* las flechas pasan la foto y no abren el anuncio */
+      Array.prototype.forEach.call(frame.querySelectorAll(".card-arrow"), function (btn) {
+        btn.addEventListener("click", function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          stepSlide(card, Number(btn.getAttribute("data-step")) || 1);
+        });
+      });
+
+      card.addEventListener("keydown", function (e) {
+        if (e.target !== card) { return; }
+        if (e.key === "Enter" || e.key === " " || e.key === "Spacebar") {
+          e.preventDefault();
+          openSheet(p);
+        } else if (e.key === "ArrowLeft") {
+          e.preventDefault();
+          stepSlide(card, -1);
+        } else if (e.key === "ArrowRight") {
+          e.preventDefault();
+          stepSlide(card, 1);
+        }
+      });
+
+      card.addEventListener("keydown", function (e) {
+        if (e.target !== card) { return; }
+        if (e.key === "Enter" || e.key === " " || e.key === "Spacebar") {
+          e.preventDefault();
+          openSheet(p);
+        } else if (e.key === "ArrowLeft") {
+          e.preventDefault();
+          stepSlide(card, -1);
+        } else if (e.key === "ArrowRight") {
+          e.preventDefault();
+          stepSlide(card, 1);
+        }
+      });
+
+      grid.appendChild(card);
+    });
+  }
+
+  /* ─────────────────────────────────────────────────────
+     PASE DE DIAPOSITIVAS — cada tarjeta pasa sus fotos sola
+     ───────────────────────────────────────────────────── */
+  var slideTimer = null;
+  var SLIDE_MS = 4200;
+
+  function reduceMotion() {
+    return !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  }
+
+  function showSlide(card, slides, index) {
+    for (var i = 0; i < slides.length; i++) {
+      slides[i].classList.toggle("is-active", i === index);
+    }
+    card.dataset.slide = String(index);
+    var dots = card.querySelectorAll(".card-dots i");
+    for (var j = 0; j < dots.length; j++) {
+      dots[j].classList.toggle("is-active", j === index);
+    }
+  }
+
+  /* paso manual con las flechas: el automático se queda quieto unos segundos */
+  function stepSlide(card, delta) {
+    var slides = card.querySelectorAll(".photo-slide");
+    if (slides.length < 2) { return; }
+    var current = parseInt(card.dataset.slide || "0", 10) || 0;
+    showSlide(card, slides, (current + delta + slides.length) % slides.length);
+    card.dataset.paused = "1";
+    clearTimeout(card.slideHold);
+    card.slideHold = setTimeout(function () {
+      if (!card.matches(":hover")) { card.dataset.paused = "0"; }
+    }, 7000);
+  }
+
+  function nextSlide() {
+    if (document.hidden || document.body.style.overflow === "hidden") { return; }
+    var cards = grid.querySelectorAll(".card");
+    for (var i = 0; i < cards.length; i++) {
+      var card = cards[i];
+      if (card.hidden || card.dataset.paused === "1") { continue; }
+      var slides = card.querySelectorAll(".photo-slide");
+      if (slides.length < 2) { continue; }
+      var current = parseInt(card.dataset.slide || "0", 10) || 0;
+      showSlide(card, slides, (current + 1) % slides.length);
+    }
+  }
+
+  function startSlides() {
+    if (slideTimer || reduceMotion()) { return; }
+    slideTimer = setInterval(nextSlide, SLIDE_MS);
+  }
+
+  /* al pasar el cursor sobre el propio marco también se detiene, para poder
+     mirar la fotografía con calma */
+  document.addEventListener("visibilitychange", function () {
+    if (!document.hidden) { startSlides(); }
+  });
+
+  /* ─────────────────────────────────────────────────────
+     PÁGINA DE PERFIL — cada modelo tiene su propia dirección
+     (#perfil/valentina), con todas sus fotos seguidas.
+     ───────────────────────────────────────────────────── */
+  var overlay = document.getElementById("overlay");
+
+  function profileByKey(key) {
+    for (var i = 0; i < PROFILES.length; i++) {
+      if (PROFILES[i].key === key) { return PROFILES[i]; }
+    }
+    return null;
+  }
+
+  function openSheet(p) {
+    lastFocus = document.activeElement;
+    currentProfile = p;
+
+    document.getElementById("sheetName").textContent = p.name + ", " + p.edad;
+    document.getElementById("sheetIntro").textContent = profileField(p, "intro");
+    document.getElementById("sheetTag").textContent = profileField(p, "speciality");
+    renderProfilePhotos();
+    renderGallery();
+    external(
+      document.getElementById("sheetCta"),
+      waLink(fill(t("sheet.wa.prefill"), { nombre: p.name }))
+    );
+
+    var facts = [
+      [t("sheet.fact.city"), t(p.cityKey)],
+      [t("sheet.fact.height"), profileField(p, "height")],
+      [t("sheet.fact.langs"), p.langKeys.map(function (k) { return t(k); }).join(", ")],
+      [t("sheet.fact.avail"), profileField(p, "avail")],
+      [t("sheet.fact.fee"), fill(t("card.price.from"), { n: p.desde })]
+    ];
+    document.getElementById("sheetFacts").innerHTML = facts.map(function (f) {
+      return "<div><dt>" + f[0] + "</dt><dd>" + f[1] + "</dd></div>";
+    }).join("");
+
+    overlay.hidden = false;
+    document.body.style.overflow = "hidden";
+    overlay.scrollTop = 0;
+    if (location.hash !== "#perfil/" + p.key) {
+      try { history.pushState(null, "", "#perfil/" + p.key); } catch (err) { location.hash = "#perfil/" + p.key; }
+    }
+  }
+
+  function closeSheet() {
+    if (overlay.hidden) { return; }
+    overlay.hidden = true;
+    document.body.style.overflow = "";
+    currentProfile = null;
+    if (lastFocus && lastFocus.focus) { lastFocus.focus(); }
+    if (/^#perfil\//.test(location.hash)) {
+      try { history.pushState(null, "", "#coleccion"); } catch (err) {}
+    }
+  }
+
+  /* la dirección manda: al cargar o al volver atrás se abre el perfil */
+  function syncFromHash() {
+    var m = /^#perfil\/([A-Za-z0-9_-]+)$/.exec(location.hash || "");
+    if (m) {
+      var p = profileByKey(m[1]);
+      if (p && (!currentProfile || currentProfile.key !== p.key)) { openSheet(p); }
+      return;
+    }
+    if (!overlay.hidden) { closeSheet(); }
+  }
+
+  document.getElementById("sheetClose").addEventListener("click", function (e) {
+    e.preventDefault();
+    closeSheet();
+  });
+  document.getElementById("sheetCta").addEventListener("click", function () {
+    overlay.hidden = true;
+    document.body.style.overflow = "";
+    currentProfile = null;
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && !overlay.hidden) { closeSheet(); }
+  });
+  window.addEventListener("hashchange", syncFromHash);
+  window.addEventListener("popstate", syncFromHash);
+
+  /* ─────────────────────────────────────────────────────
+     IDIOMA
+     ───────────────────────────────────────────────────── */
+  function applyLang() {
+    document.documentElement.lang = lang;
+
+    all("[data-i18n]").forEach(function (el) {
+      el.innerHTML = t(el.getAttribute("data-i18n"));
+    });
+    all("[data-i18n-ph]").forEach(function (el) {
+      el.setAttribute("placeholder", t(el.getAttribute("data-i18n-ph")));
+    });
+    all("[data-i18n-aria]").forEach(function (el) {
+      el.setAttribute("aria-label", t(el.getAttribute("data-i18n-aria")));
+    });
+    all("[data-lang]").forEach(function (btn) {
+      btn.setAttribute("aria-pressed", btn.getAttribute("data-lang") === lang ? "true" : "false");
+    });
+
+    renderProfiles();
+    if (currentProfile) { renderGallery(); }
+
+    // el borrador ya compuesto se rehace en el idioma nuevo
+    if (draft.classList.contains("on")) { buildDraft(); }
+  }
+
+  function setLang(next) {
+    lang = next;
+    try { localStorage.setItem(STORAGE_KEY, lang); } catch (err) {}
+    applyLang();
+  }
+
+  all("[data-lang]").forEach(function (btn) {
+    btn.addEventListener("click", function () { setLang(btn.getAttribute("data-lang")); });
+  });
+
+  /* ─────────────────────────────────────────────────────
+     FILTROS
+     ───────────────────────────────────────────────────── */
+  var chips = all(".chip");
+  chips.forEach(function (chip) {
+    chip.addEventListener("click", function () {
+      chips.forEach(function (c) { c.setAttribute("aria-pressed", "false"); });
+      chip.setAttribute("aria-pressed", "true");
+      activeFilter = chip.getAttribute("data-filter");
+      renderProfiles();
+    });
+  });
+
+  /* ─────────────────────────────────────────────────────
+     MENÚ MÓVIL
+     ───────────────────────────────────────────────────── */
+  var panel = document.getElementById("mobilePanel");
+  var burger = document.getElementById("burger");
+
+  burger.addEventListener("click", function () {
+    panel.hidden = false;
+    burger.setAttribute("aria-expanded", "true");
+    document.body.style.overflow = "hidden";
+  });
+
+  function closeMenu() {
+    panel.hidden = true;
+    burger.setAttribute("aria-expanded", "false");
+    document.body.style.overflow = "";
+  }
+  document.getElementById("closeMenu").addEventListener("click", closeMenu);
+  all("#mobilePanel a").forEach(function (a) { a.addEventListener("click", closeMenu); });
+
+  /* ─────────────────────────────────────────────────────
+     COPIAR
+     ───────────────────────────────────────────────────── */
+  var toast = document.getElementById("toast");
+  var toastTimer;
+
+  function flash(msg) {
+    toast.textContent = msg;
+    toast.classList.add("on");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toast.classList.remove("on"); }, 2400);
+  }
+
+  function legacyCopy(text) {
+    var ta = document.createElement("textarea");
+    ta.value = text;
+    ta.setAttribute("readonly", "");
+    ta.style.position = "fixed";
+    ta.style.top = "-1000px";
+    document.body.appendChild(ta);
+    ta.select();
+    var ok = false;
+    try { ok = document.execCommand("copy"); } catch (err) { ok = false; }
+    document.body.removeChild(ta);
+    return ok;
+  }
+
+  function copyText(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () {
+        flash(fill(t("toast.copied"), { texto: text }));
+      }).catch(function () {
+        flash(legacyCopy(text) ? fill(t("toast.copied"), { texto: text }) : t("toast.copyManual"));
+      });
+    } else {
+      flash(legacyCopy(text) ? fill(t("toast.copied"), { texto: text }) : t("toast.copyManual"));
+    }
+  }
+
+  all("[data-copy]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var text = btn.getAttribute("data-copy");
+      if (text) { copyText(text); }
+    });
+  });
+
+  /* ─────────────────────────────────────────────────────
+     FORMULARIO: compone el mensaje, no envía nada
+     ───────────────────────────────────────────────────── */
+  var form = document.getElementById("enquiry");
+  var draft = document.getElementById("draft");
+  var draftText = document.getElementById("draftText");
+  var lastDraft = "";
+
+  function buildDraft() {
+    var nombre = (document.getElementById("f-nombre").value || "").trim();
+    var fecha = document.getElementById("f-fecha").value;
+    var ciudad = (document.getElementById("f-ciudad").value || "").trim();
+    var tipo = document.getElementById("f-tipo");
+    var mensaje = (document.getElementById("f-mensaje").value || "").trim();
+
+    var lines = [t("draft.greeting")];
+    if (nombre) { lines.push(t("draft.name") + " " + nombre); }
+    if (fecha) {
+      var d = new Date(fecha + "T12:00:00");
+      var locale = lang === "en" ? "en-GB" : "es-ES";
+      lines.push(t("draft.date") + " " + d.toLocaleDateString(locale, { day: "2-digit", month: "long", year: "numeric" }));
+    }
+    lines.push(t("draft.city") + " " + (ciudad || t("form.city.ph")));
+    if (tipo && tipo.selectedIndex >= 0) {
+      lines.push(t("draft.type") + " " + tipo.options[tipo.selectedIndex].textContent.trim());
+    }
+    if (mensaje) { lines.push(t("draft.details") + " " + mensaje); }
+
+    lastDraft = lines.join("\n");
+    draftText.textContent = lastDraft;
+    draft.classList.add("on");
+    external(document.getElementById("openWa"), waLink(lastDraft));
+  }
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    buildDraft();
+  });
+
+  document.getElementById("copyDraft").addEventListener("click", function () {
+    if (!lastDraft) { buildDraft(); }
+    copyText(lastDraft);
+  });
+
+  /* ─────────────────────────────────────────────────────
+     ARRANQUE
+     ───────────────────────────────────────────────────── */
+  applyContacts();
+  applyLang();
+  syncFromHash();
+  loadRemotePhotos();
+  startSlides();
+})();
+</script>
