@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://advfalcorreia-commits.github.io/lumiere-madrid-demo/sitemap.xml
