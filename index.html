@@ -2105,8 +2105,17 @@ footer { border-top: 1px solid var(--line); background: var(--bg-2); }
   var serverMode = false;
 
   /* Gancho de producción: fotos fijas por perfil, p. ej.
-     { valentina: ["fotos/valentina-01.jpg", "fotos/valentina-02.jpg"] } */
-  var SEED_PHOTOS = {};
+     { valentina: ["fotos/valentina-01.jpg", "fotos/valentina-02.jpg"] }
+     Versión de demostración: ilustraciones vectoriales propias (no fotografías),
+     rotuladas "RETRATO DE DEMOSTRACIÓN". Sustituir por fotografía real. */
+  var SEED_PHOTOS = {
+    valentina: ["fotos/valentina-1.svg", "fotos/valentina-2.svg"],
+    sofia: ["fotos/sofia-1.svg", "fotos/sofia-2.svg"],
+    carlota: ["fotos/carlota-1.svg", "fotos/carlota-2.svg"],
+    naomi: ["fotos/naomi-1.svg", "fotos/naomi-2.svg"],
+    irene: ["fotos/irene-1.svg", "fotos/irene-2.svg"],
+    alba: ["fotos/alba-1.svg", "fotos/alba-2.svg"]
+  };
 
   try {
     var savedPhotos = JSON.parse(localStorage.getItem(PHOTO_STORE) || "{}");
